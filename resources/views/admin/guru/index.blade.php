@@ -1,5 +1,4 @@
 @extends('admin.layouts.main')
-
 @section('content')
 <div class="page-header mb-4">
   <div class="page-block">

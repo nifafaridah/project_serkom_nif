@@ -89,6 +89,13 @@
             <span class="pc-mtext">Kelola User</span>
           </a>
         </li>
+        
+        <li class="pc-item {{ Request::is('user*') ? 'active' : '' }}">
+          <a href="{{ url('/user') }}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-settings"></i></span>
+            <span class="pc-mtext">Logout</span>
+          </a>
+        </li>
 
       </ul>
     </div>

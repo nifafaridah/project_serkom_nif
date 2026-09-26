@@ -15,6 +15,4 @@ Route::post('/guru', [GuruController::class, 'store'])->name('guru.store');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout']) ->name('logout');
-Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
-Route::get('/siswa/create', [SiswaController::class, 'create'])->name('siswa.create');
-Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
+Route::resource('/siswa', SiswaController::class,);

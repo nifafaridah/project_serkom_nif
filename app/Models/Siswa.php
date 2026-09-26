@@ -14,10 +14,9 @@ class Siswa extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nisn',
-        'nama_siswa',
-        'jenis_kelamin',
-        'tahun_masuk',
+    'nisn',
+    'nama_siswa',
+    'jenis_kelamin',
+    'tahun_masuk',
     ];
 }
-

@@ -2,53 +2,87 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Siswa;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller
 {
-    //
-    // 1. Tampil Data Siswa
+    // Menampilkan semua data siswa
     public function index()
     {
-        $siswa = DB::table('siswa')->get();
+        $siswa = Siswa::all();
+
         return view('admin.siswa.index', compact('siswa'));
     }
 
-    // 2. Form Tambah Siswa
+    // Menampilkan form tambah siswa
     public function create()
     {
         return view('admin.siswa.create');
     }
 
-    // 3. Simpan Data Siswa
-    public function store(Request $request)
+   public function store(Request $request)
+{
+    $request->validate([
+        'nisn' => 'required|max:10',
+        'nama_siswa' => 'required|max:40',
+        'jenis_kelamin' => 'required',
+        'tahun_masuk' => 'required',
+    ]);
+
+    Siswa::create([
+        'nisn' => $request->nisn,
+        'nama_siswa' => $request->nama_siswa,
+        'jenis_kelamin' => $request->jenis_kelamin,
+        'tahun_masuk' => $request->tahun_masuk,
+    ]);
+
+    return redirect()
+        ->route('siswa.index')
+        ->with('success', 'Data siswa berhasil ditambahkan!');
+}
+
+    // Menampilkan form edit siswa
+    public function edit($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+
+        return view('admin.siswa.edit', compact('siswa'));
+    }
+
+    // Memperbarui data siswa
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'nis'           => 'required',
-            'nama_siswa'    => 'required',
-            'kelas'         => 'required',
+            'nisn' => 'required|max:10',
+            'nama_siswa' => 'required|max:40',
             'jenis_kelamin' => 'required',
-            'alamat'        => 'nullable',
-            'foto'          => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            'tahun_masuk' => 'required',
         ]);
 
-        $namaFoto = null;
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $namaFoto = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/siswa'), $namaFoto);
-        }
+        $siswa = Siswa::findOrFail($id);
 
-        DB::table('siswa')->insert([
-            'nis'           => $request->nis,
-            'nama_siswa'    => $request->nama_siswa,
-            'kelas'         => $request->kelas,
+        $siswa->update([
+            'nisn' => $request->nisn,
+            'nama_siswa' => $request->nama_siswa,
             'jenis_kelamin' => $request->jenis_kelamin,
-            'alamat'        => $request->alamat,
-            'foto'          => $namaFoto,
+            'tahun_masuk' => $request->tahun_masuk,
         ]);
 
-        return redirect()->route('siswa.index')->with('success', 'Data Siswa berhasil ditambahkan!');
+        return redirect()
+            ->route('siswa.index')
+            ->with('success', 'Data siswa berhasil diperbarui!');
+    }
+
+    // Menghapus data siswa
+    public function destroy($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+
+        $siswa->delete();
+
+        return redirect()
+            ->route('siswa.index')
+            ->with('success', 'Data siswa berhasil dihapus!');
     }
 }
