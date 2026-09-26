@@ -99,7 +99,7 @@
       <div class="card-body">
         <h4 class="fw-bold mb-2">Dashboard Admin Sekolah</h4>
         <p class="text-muted mb-4">Selamat datang di Sistem Informasi Sekolah. Melalui halaman ini admin dapat mengelola data sekolah, guru, siswa, user, dan galeri.</p>
-        <a href="{{ route('profil-sekolah') }}" class="btn btn-primary">
+        <a href="{{ route('profil-sekolah.index') }}" class="btn btn-primary">
           <i class="ti ti-school me-1"></i> Kelola Profil Sekolah
         </a>
       </div>
@@ -154,7 +154,7 @@
   <div class="card-body">
     <div class="row g-3 text-center">
       <div class="col-md-3 col-6">
-        <a href="{{ route('profil-sekolah') }}" class="card card-hover border text-decoration-none p-3 h-100 d-flex flex-column align-items-center justify-content-center">
+        <a href="{{ route('profil-sekolah.index') }}" class="card card-hover border text-decoration-none p-3 h-100 d-flex flex-column align-items-center justify-content-center">
           <i class="ti ti-school fs-1 text-primary mb-2"></i>
           <span class="fw-bold text-dark">Profil Sekolah</span>
         </a>

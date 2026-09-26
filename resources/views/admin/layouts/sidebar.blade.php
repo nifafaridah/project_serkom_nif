@@ -25,7 +25,7 @@
         </li>
 
         <li class="pc-item {{ Request::is('profil-sekolah*') ? 'active' : '' }}">
-          <a href="{{ route('profil-sekolah') }}" class="pc-link">
+          <a href="{{ route('profil-sekolah.index') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-school"></i></span>
             <span class="pc-mtext">Profil Sekolah</span>
           </a>
@@ -89,7 +89,7 @@
             <span class="pc-mtext">Kelola User</span>
           </a>
         </li>
-        
+
         <li class="pc-item {{ Request::is('user*') ? 'active' : '' }}">
           <a href="{{ url('/user') }}" class="pc-link">
             <span class="pc-micon"><i class="ti ti-settings"></i></span>

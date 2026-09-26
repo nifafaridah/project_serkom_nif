@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class SiswaController extends Controller
 {
-    // Menampilkan semua data siswa
+    // Menampilkan data siswa
     public function index()
     {
         $siswa = Siswa::all();
@@ -15,34 +15,42 @@ class SiswaController extends Controller
         return view('admin.siswa.index', compact('siswa'));
     }
 
+
     // Menampilkan form tambah siswa
     public function create()
     {
         return view('admin.siswa.create');
     }
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'nisn' => 'required|max:10',
-        'nama_siswa' => 'required|max:40',
-        'jenis_kelamin' => 'required',
-        'tahun_masuk' => 'required',
-    ]);
 
-    Siswa::create([
-        'nisn' => $request->nisn,
-        'nama_siswa' => $request->nama_siswa,
-        'jenis_kelamin' => $request->jenis_kelamin,
-        'tahun_masuk' => $request->tahun_masuk,
-    ]);
+    // Menyimpan data siswa
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nisn' => 'required',
+            'nama_siswa' => 'required|max:40',
+            'jenis_kelamin' => 'required',
+            'tahun_masuk' => 'required',
+        ]);
 
-    return redirect()
-        ->route('siswa.index')
-        ->with('success', 'Data siswa berhasil ditambahkan!');
-}
+        // Membuat data siswa baru
+        $siswa = new Siswa();
 
-    // Menampilkan form edit siswa
+        $siswa->nisn = $request->nisn;
+        $siswa->nama_siswa = $request->nama_siswa;
+        $siswa->jenis_kelamin = $request->jenis_kelamin;
+        $siswa->tahun_masuk = $request->tahun_masuk;
+
+        // Simpan ke database
+        $siswa->save();
+
+        return redirect()
+            ->route('siswa.index')
+            ->with('success', 'Data siswa berhasil ditambahkan!');
+    }
+
+
+    // Form edit siswa
     public function edit($id)
     {
         $siswa = Siswa::findOrFail($id);
@@ -50,11 +58,12 @@ class SiswaController extends Controller
         return view('admin.siswa.edit', compact('siswa'));
     }
 
-    // Memperbarui data siswa
+
+    // Update data siswa
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nisn' => 'required|max:10',
+            'nisn' => 'required',
             'nama_siswa' => 'required|max:40',
             'jenis_kelamin' => 'required',
             'tahun_masuk' => 'required',
@@ -62,19 +71,20 @@ class SiswaController extends Controller
 
         $siswa = Siswa::findOrFail($id);
 
-        $siswa->update([
-            'nisn' => $request->nisn,
-            'nama_siswa' => $request->nama_siswa,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tahun_masuk' => $request->tahun_masuk,
-        ]);
+        $siswa->nisn = $request->nisn;
+        $siswa->nama_siswa = $request->nama_siswa;
+        $siswa->jenis_kelamin = $request->jenis_kelamin;
+        $siswa->tahun_masuk = $request->tahun_masuk;
+
+        $siswa->save();
 
         return redirect()
             ->route('siswa.index')
             ->with('success', 'Data siswa berhasil diperbarui!');
     }
 
-    // Menghapus data siswa
+
+    // Hapus data siswa
     public function destroy($id)
     {
         $siswa = Siswa::findOrFail($id);

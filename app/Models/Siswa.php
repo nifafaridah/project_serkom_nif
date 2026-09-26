@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Siswa extends Model
 {
-    //
     protected $table = 'siswa';
 
     protected $primaryKey = 'id_siswa';
@@ -14,9 +13,9 @@ class Siswa extends Model
     public $timestamps = false;
 
     protected $fillable = [
-    'nisn',
-    'nama_siswa',
-    'jenis_kelamin',
-    'tahun_masuk',
+        'nisn',
+        'nama_siswa',
+        'jenis_kelamin',
+        'tahun_masuk',
     ];
 }
