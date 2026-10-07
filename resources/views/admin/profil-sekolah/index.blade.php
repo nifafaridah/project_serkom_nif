@@ -27,11 +27,9 @@
                         <ul class="breadcrumb">
 
                             <li class="breadcrumb-item">
-
                                 <a href="{{ url('/') }}">
                                     Home
                                 </a>
-
                             </li>
 
                             <li class="breadcrumb-item">
@@ -287,6 +285,27 @@
                                         value="{{ old('kepala_sekolah') }}"
                                         required
                                     >
+
+                                </div>
+
+
+                                {{-- SAMBUTAN KEPALA SEKOLAH --}}
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+                                        Sambutan Kepala Sekolah
+                                    </label>
+
+                                    <textarea
+                                        name="sambutan"
+                                        class="form-control"
+                                        rows="7"
+                                        placeholder="Tulis sambutan kepala sekolah..."
+                                    >{{ old('sambutan') }}</textarea>
+
+                                    <small class="text-muted">
+                                        Isi sambutan yang akan ditampilkan pada halaman depan website.
+                                    </small>
 
                                 </div>
 
@@ -614,6 +633,20 @@
                                 <h6 class="mb-0">
                                     {{ $profil->kepala_sekolah }}
                                 </h6>
+
+                            </div>
+
+
+                            {{-- SAMBUTAN KEPALA SEKOLAH --}}
+                            <div class="mb-4">
+
+                                <label class="form-label text-muted">
+                                    Sambutan Kepala Sekolah
+                                </label>
+
+                                <div style="white-space: pre-line;">
+                                    {{ $profil->sambutan ?? 'Belum ada sambutan kepala sekolah.' }}
+                                </div>
 
                             </div>
 

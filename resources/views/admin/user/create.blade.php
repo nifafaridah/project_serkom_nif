@@ -28,6 +28,7 @@
 
             <div class="card-body">
 
+                {{-- Pesan Error --}}
                 @if($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">
@@ -38,50 +39,85 @@
                     </div>
                 @endif
 
+                {{-- Form Tambah User --}}
                 <form action="{{ route('user.store') }}" method="POST">
                     @csrf
 
+                    {{-- Nama --}}
                     <div class="mb-3">
                         <label class="form-label">Nama</label>
-                        <input type="text"
-                               name="name"
-                               class="form-control"
-                               value="{{ old('name') }}"
-                               required>
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            value="{{ old('name') }}"
+                            placeholder="Masukkan nama"
+                            required>
                     </div>
 
+                    {{-- Email --}}
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email"
-                               name="email"
-                               class="form-control"
-                               value="{{ old('email') }}"
-                               required>
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            value="{{ old('email') }}"
+                            placeholder="Masukkan email"
+                            required>
                     </div>
 
+                    {{-- Password --}}
                     <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password"
-                               name="password"
-                               class="form-control"
-                               required>
+                        <input
+                            type="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Masukkan password"
+                            required>
                     </div>
 
+                    {{-- Role --}}
                     <div class="mb-3">
                         <label class="form-label">Role</label>
-                        <select name="role" class="form-control">
-                            <option value="User">User</option>
-                            <option value="Administrator">Administrator</option>
+
+                        <select
+                            name="role"
+                            class="form-control"
+                            required>
+
+                            <option value="">
+                                -- Pilih Role --
+                            </option>
+
+                            <option value="User"
+                                {{ old('role') == 'User' ? 'selected' : '' }}>
+                                User
+                            </option>
+
+                            <option value="Operator"
+                                {{ old('role') == 'Operator' ? 'selected' : '' }}>
+                                Operator
+                            </option>
+
+                            <option value="Administrator"
+                                {{ old('role') == 'Administrator' ? 'selected' : '' }}>
+                                Administrator
+                            </option>
+
                         </select>
                     </div>
 
+                    {{-- Tombol --}}
                     <a href="{{ route('user.index') }}"
                        class="btn btn-secondary">
                         Kembali
                     </a>
 
-                    <button type="submit"
-                            class="btn btn-primary">
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
                         Simpan
                     </button>
 

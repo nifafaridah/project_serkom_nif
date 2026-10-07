@@ -84,6 +84,9 @@
 
             color: white;
             font-size: 22px;
+            padding:0;
+            marggin:0;
+            overflow:hidden;
         }
 
         .brand-name {
@@ -956,7 +959,9 @@
 
             <div class="logo-school me-2">
 
-                <i class="bi bi-mortarboard-fill"></i>
+                <img src="{{ asset('uploads/logo.png') }}"
+                alt="Logo SDN CITATAH"
+                style="width:100%; height:100%; object-fit:fill; border-radius:50%; display:block;" >
 
             </div>
 
@@ -1026,7 +1031,6 @@
                        role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false">
-
                         <i class="bi bi-building me-1"></i>
 
                         Tentang Sekolah
@@ -1138,22 +1142,6 @@
                        href="#galeri">
 
                         Galeri
-
-                    </a>
-
-                </li>
-
-
-                <!-- LOGIN -->
-
-                <li class="nav-item ms-lg-3">
-
-                    <a href="{{ route('login') }}"
-                       class="nav-link login-button">
-
-                        <i class="bi bi-box-arrow-in-right me-1"></i>
-
-                        Login
 
                     </a>
 
@@ -1308,34 +1296,33 @@
 
         <div class="row g-4">
 
+        <!-- SISWA -->
 
-            <!-- SISWA -->
+        <div class="col-lg col-md-6">
 
-            <div class="col-lg col-md-6">
+              <div class="stat-card">
 
-                <div class="stat-card">
+           <div class="stat-icon">
 
-                    <div class="stat-icon">
+            <i class="bi bi-people"></i>
 
-                        <i class="bi bi-people"></i>
+           </div>
 
-                    </div>
+              <div class="stat-number">
 
-                    <div class="stat-number">
+            {{ isset($siswa) ? $siswa->count() : 0 }}
 
-                        {{ $jumlahSiswa ?? 0 }}
+             </div>
 
-                    </div>
+           <div class="stat-title">
 
-                    <div class="stat-title">
+               Siswa
 
-                        Siswa
+        </div>
 
-                    </div>
+    </div>
 
-                </div>
-
-            </div>
+</div>
 
 
             <!-- GURU -->

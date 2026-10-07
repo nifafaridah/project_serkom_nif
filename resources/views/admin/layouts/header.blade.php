@@ -1,122 +1,443 @@
+```html
+<!-- [ Header ] start -->
+<header class="pc-header">
+    <div class="header-wrapper">
 
-</div>
-</header>
-    <div class="ms-auto">
-      <ul class="list-unstyled">
-        <li class="dropdown pc-h-item">
-          <a
-            class="pc-head-link dropdown-toggle arrow-none me-0"
-            data-bs-toggle="dropdown"
-            href="#"
-            role="button"
-            aria-haspopup="false"
-            aria-expanded="false">
-            <i class="ti ti-mail"></i>
-          </a>
-          <div class="dropdown-menu dropdown-notification dropdown-menu-end pc-h-dropdown">
+        <!-- ===================================================== -->
+        <!-- SIDEBAR / MOBILE MENU -->
+        <!-- ===================================================== -->
+        <div class="me-auto pc-mob-drp">
+            <ul class="list-unstyled">
 
-            <div class="dropdown-header d-flex align-items-center justify-content-between">
-              <h5 class="m-0">Message</h5>
-              <a href="#!" class="pc-head-link bg-transparent">
-                <i class="ti ti-x text-danger"></i>
-              </a>
-            </div>
+                <!-- Mobile Sidebar -->
+                <li class="pc-h-item pc-sidebar-popup">
+                    <a
+                        href="#"
+                        class="pc-head-link ms-0"
+                        id="sidebar-hide">
 
-            <div class="dropdown-divider"></div>
+                        <i class="ti ti-menu-2"></i>
 
-            <div
-              class="dropdown-header px-0 text-wrap header-notification-scroll position-relative"
-              style="max-height: calc(100vh - 215px)">
+                    </a>
+                </li>
 
-              <div class="list-group list-group-flush w-100">
 
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="../assets/images/user/avatar-2.jpg"
-                        alt="user-image"
-                        class="user-avtar">
+                <!-- Desktop Sidebar -->
+                <li class="pc-h-item pc-sidebar-collapse">
+                    <a
+                        href="#"
+                        class="pc-head-link ms-0"
+                        id="collapse-menu">
+
+                        <i class="ti ti-menu-2"></i>
+
+                    </a>
+                </li>
+
+
+                <!-- ================================================= -->
+                <!-- SEARCH -->
+                <!-- ================================================= -->
+                <li class="pc-h-item">
+                    <form class="header-search">
+
+                        <!-- Icon Search -->
+                        <div class="search-btn">
+                            <i class="ti ti-search"></i>
+                        </div>
+
+
+                        <!-- Input Search -->
+                        <input
+                            type="search"
+                            class="form-control"
+                            placeholder="Search here..."
+                            aria-label="Search">
+
+
+                        <!-- Tombol Close -->
+                        <div class="search-btn">
+                            <i class="ti ti-x"></i>
+                        </div>
+
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- HEADER SEBELAH KANAN -->
+        <!-- ===================================================== -->
+        <div class="ms-auto">
+
+            <ul class="list-unstyled">
+
+
+                <!-- ================================================= -->
+                <!-- NOTIFIKASI -->
+                <!-- ================================================= -->
+                <li class="dropdown pc-h-item">
+
+                    <a
+                        class="pc-head-link dropdown-toggle arrow-none me-0"
+                        data-bs-toggle="dropdown"
+                        href="#"
+                        role="button"
+                        aria-haspopup="false"
+                        aria-expanded="false">
+
+                        <i class="ti ti-bell"></i>
+
+                    </a>
+
+
+                    <!-- Dropdown Notifikasi -->
+                    <div class="dropdown-menu dropdown-notification dropdown-menu-end pc-h-dropdown">
+
+
+                        <!-- Header Notifikasi -->
+                        <div class="dropdown-header d-flex align-items-center justify-content-between">
+
+                            <h5 class="m-0">
+                                Notifikasi
+                            </h5>
+
+
+                            <a
+                                href="#!"
+                                class="pc-head-link bg-transparent">
+
+                                <i class="ti ti-x text-danger"></i>
+
+                            </a>
+
+                        </div>
+
+
+                        <div class="dropdown-divider"></div>
+
+
+                        <!-- Isi Notifikasi -->
+                        <div
+                            class="dropdown-header px-0 text-wrap header-notification-scroll position-relative"
+                            style="max-height: calc(100vh - 215px)">
+
+
+                            <div class="list-group list-group-flush w-100">
+
+
+                                <!-- ============================= -->
+                                <!-- NOTIFIKASI 1 -->
+                                <!-- ============================= -->
+                                <a
+                                    href="#!"
+                                    class="list-group-item list-group-item-action">
+
+                                    <div class="d-flex">
+
+
+                                        <div class="flex-shrink-0">
+
+                                            <span class="avtar avtar-s bg-light-primary">
+
+                                                <i class="ti ti-user-plus"></i>
+
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="flex-grow-1 ms-3">
+
+                                            <p class="text-body mb-1">
+
+                                                Data guru berhasil diperbarui.
+
+                                            </p>
+
+
+                                            <span class="text-muted">
+
+                                                Baru saja
+
+                                            </span>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </a>
+
+
+                                <!-- ============================= -->
+                                <!-- NOTIFIKASI 2 -->
+                                <!-- ============================= -->
+                                <a
+                                    href="#!"
+                                    class="list-group-item list-group-item-action">
+
+                                    <div class="d-flex">
+
+
+                                        <div class="flex-shrink-0">
+
+                                            <span class="avtar avtar-s bg-light-success">
+
+                                                <i class="ti ti-school"></i>
+
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="flex-grow-1 ms-3">
+
+                                            <p class="text-body mb-1">
+
+                                                Data siswa berhasil disimpan.
+
+                                            </p>
+
+
+                                            <span class="text-muted">
+
+                                                5 menit yang lalu
+
+                                            </span>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </a>
+
+
+                                <!-- ============================= -->
+                                <!-- NOTIFIKASI 3 -->
+                                <!-- ============================= -->
+                                <a
+                                    href="#!"
+                                    class="list-group-item list-group-item-action">
+
+                                    <div class="d-flex">
+
+
+                                        <div class="flex-shrink-0">
+
+                                            <span class="avtar avtar-s bg-light-warning">
+
+                                                <i class="ti ti-photo"></i>
+
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="flex-grow-1 ms-3">
+
+                                            <p class="text-body mb-1">
+
+                                                Galeri sekolah diperbarui.
+
+                                            </p>
+
+
+                                            <span class="text-muted">
+
+                                                1 jam yang lalu
+
+                                            </span>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </a>
+
+
+                                <!-- ============================= -->
+                                <!-- NOTIFIKASI 4 -->
+                                <!-- ============================= -->
+                                <a
+                                    href="#!"
+                                    class="list-group-item list-group-item-action">
+
+                                    <div class="d-flex">
+
+
+                                        <div class="flex-shrink-0">
+
+                                            <span class="avtar avtar-s bg-light-danger">
+
+                                                <i class="ti ti-news"></i>
+
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="flex-grow-1 ms-3">
+
+                                            <p class="text-body mb-1">
+
+                                                Berita sekolah berhasil ditambahkan.
+
+                                            </p>
+
+
+                                            <span class="text-muted">
+
+                                                2 jam yang lalu
+
+                                            </span>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </a>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="dropdown-divider"></div>
+
+
+                        <!-- Lihat Semua -->
+                        <div class="text-center py-2">
+
+                            <a
+                                href="#!"
+                                class="link-primary">
+
+                                Lihat semua notifikasi
+
+                            </a>
+
+                        </div>
+
+
                     </div>
 
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">3:00 AM</span>
-                      <p class="text-body mb-1">
-                        It's <b>Cristina danny's</b> birthday today.
-                      </p>
-                      <span class="text-muted">2 min ago</span>
-                    </div>
-                  </div>
-                </a>
+                </li>
 
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="../assets/images/user/avatar-1.jpg"
-                        alt="user-image"
-                        class="user-avtar">
+
+                <!-- ================================================= -->
+                <!-- PROFILE -->
+                <!-- ================================================= -->
+                <li class="dropdown pc-h-item">
+
+
+                    <!-- Tombol Profile -->
+                    <a
+                        class="pc-head-link dropdown-toggle arrow-none me-0"
+                        data-bs-toggle="dropdown"
+                        href="#"
+                        role="button"
+                        aria-haspopup="false"
+                        aria-expanded="false">
+
+                        <i class="ti ti-user"></i>
+
+                    </a>
+
+
+                    <!-- Dropdown Profile -->
+                    <div class="dropdown-menu dropdown-menu-end pc-h-dropdown">
+
+
+                        <!-- Informasi User -->
+                        <div class="dropdown-header">
+
+                            <h5 class="mb-0">
+
+                                {{ Auth::user()->name ?? 'Administrator' }}
+
+                            </h5>
+
+
+                            <small class="text-muted">
+
+                                Administrator
+
+                            </small>
+
+                        </div>
+
+
+                        <div class="dropdown-divider"></div>
+
+
+                        <!-- Profil -->
+                        <a
+                            href="#"
+                            class="dropdown-item">
+
+                            <i class="ti ti-user me-2"></i>
+
+                            Profil
+
+                        </a>
+
+
+                        <!-- Pengaturan -->
+                        <a
+                            href="#"
+                            class="dropdown-item">
+
+                            <i class="ti ti-settings me-2"></i>
+
+                            Pengaturan
+
+                        </a>
+
+
+                        <div class="dropdown-divider"></div>
+
+
+                        <!-- Logout -->
+                        <a
+                            href="{{ route('logout') }}"
+                            class="dropdown-item"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+
+                            <i class="ti ti-power me-2"></i>
+
+                            Logout
+
+                        </a>
+
+
+                        <!-- Form Logout -->
+                        <form
+                            id="logout-form"
+                            action="{{ route('logout') }}"
+                            method="POST"
+                            class="d-none">
+
+                            @csrf
+
+                        </form>
+
+
                     </div>
 
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">6:00 PM</span>
-                      <p class="text-body mb-1">
-                        <b>Aida Burg</b> commented your post.
-                      </p>
-                      <span class="text-muted">5 August</span>
-                    </div>
-                  </div>
-                </a>
+                </li>
 
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="../assets/images/user/avatar-3.jpg"
-                        alt="user-image"
-                        class="user-avtar">
-                    </div>
 
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">2:45 PM</span>
-                      <p class="text-body mb-1">
-                        <b>There was a failure to your setup.</b>
-                      </p>
-                      <span class="text-muted">7 hours ago</span>
-                    </div>
-                  </div>
-                </a>
+            </ul>
 
-                <a class="list-group-item list-group-item-action">
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="../assets/images/user/avatar-4.jpg"
-                        alt="user-image"
-                        class="user-avtar">
-                    </div>
+        </div>
 
-                    <div class="flex-grow-1 ms-1">
-                      <span class="float-end text-muted">9:10 PM</span>
-                      <p class="text-body mb-1">
-                        <b>Cristina Danny</b> invited to join <b>Meeting.</b>
-                      </p>
-                      <span class="text-muted">
-                        Daily scrum meeting time
-                      </span>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="dropdown-divider"></div>
-            <div class="text-center py-2">
-              <a href="#!" class="link-primary">View all</a>
-            </div>
-          </div>
-        </li>
-      </ul>
     </div>
-
-  </div>
 </header>
+<!-- [ Header ] end -->

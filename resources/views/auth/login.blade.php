@@ -4,277 +4,250 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login Admin - SDN CITATAH</title>
-
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Login - SDN CITATAH</title>
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
         }
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #eef6ff, #f8fbff);
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
+            padding: 20px;
         }
 
-        .login-wrapper {
-            width: 100%;
-            max-width: 950px;
-            padding: 30px;
-        }
+        .login-box {
+            width: 420px;
+            max-width: 100%;
 
-        .login-card {
-            width: 100%;
-            min-height: 540px;
             background: white;
-            border-radius: 25px;
-            overflow: hidden;
-            display: flex;
-            box-shadow: 0 15px 45px rgba(0, 80, 180, 0.15);
-        }
 
-        /* =========================
-           BAGIAN KIRI
-        ========================= */
+            padding: 40px;
 
-        .login-left {
-            width: 48%;
-            background: linear-gradient(145deg, #087cf5, #0759c9);
-            color: white;
-            padding: 50px 40px;
+            border-radius: 14px;
 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 
             text-align: center;
         }
 
-        /* ICON SEKOLAH */
-        .logo-box {
-            width: 125px;
-            height: 125px;
+        /* LOGO */
 
-            background: white;
-            border-radius: 25px;
+        .logo {
+            width: 110px;
+            height: 110px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            object-fit: contain;
+
+            display: block;
+
+            margin: 0 auto 18px;
+        }
+
+        /* NAMA SEKOLAH */
+
+        .school-name {
+            font-size: 24px;
+            font-weight: 700;
+
+            color: #1769ff;
+
+            margin-bottom: 6px;
+        }
+
+        .school-description {
+            font-size: 13px;
+
+            color: #64748b;
+
+            margin-bottom: 30px;
+        }
+
+        /* JUDUL LOGIN */
+
+        .login-title {
+            text-align: left;
+
+            font-size: 22px;
+
+            color: #1e293b;
+
+            margin-bottom: 6px;
+        }
+
+        .login-subtitle {
+            text-align: left;
+
+            font-size: 13px;
+
+            color: #94a3b8;
 
             margin-bottom: 25px;
-
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-
-        .logo-box i {
-            font-size: 60px;
-            color: #087cf5;
-        }
-
-        .login-left h1 {
-            font-size: 30px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .login-left h2 {
-            font-size: 20px;
-            font-weight: 400;
-            margin-bottom: 20px;
-        }
-
-        .login-left p {
-            font-size: 15px;
-            line-height: 1.7;
-            max-width: 330px;
-            opacity: 0.95;
-        }
-
-        .school-info {
-            margin-top: 30px;
-            padding: 12px 25px;
-
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 30px;
-
-            font-size: 14px;
-        }
-
-        /* =========================
-           BAGIAN KANAN
-        ========================= */
-
-        .login-right {
-            width: 52%;
-            padding: 55px 55px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .login-right h2 {
-            color: #123f75;
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .login-right .subtitle {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 35px;
         }
 
         /* ERROR */
+
         .error-message {
-            background: #ffe8e8;
-            color: #c62828;
+            text-align: left;
 
-            padding: 12px 15px;
+            background: #fee2e2;
 
-            border-radius: 8px;
-            margin-bottom: 20px;
+            color: #b91c1c;
 
-            font-size: 14px;
+            border: 1px solid #fecaca;
+
+            border-radius: 7px;
+
+            padding: 10px 12px;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
         }
 
         /* FORM */
+
         .form-group {
-            margin-bottom: 20px;
+            text-align: left;
+
+            margin-bottom: 18px;
         }
 
         .form-group label {
             display: block;
 
-            color: #24476d;
-            font-size: 14px;
+            font-size: 13px;
+
             font-weight: 600;
 
-            margin-bottom: 8px;
+            color: #334155;
+
+            margin-bottom: 7px;
         }
 
-        .form-group input {
+        .form-control {
             width: 100%;
-            height: 48px;
 
-            border: 1px solid #d6e0eb;
-            border-radius: 10px;
+            height: 45px;
 
-            padding: 0 15px;
+            padding: 0 13px;
 
-            font-size: 14px;
+            border: 1px solid #dbe2ea;
+
+            border-radius: 7px;
+
             outline: none;
 
-            transition: 0.3s;
+            font-size: 14px;
 
-            background: #f9fbfd;
+            color: #334155;
         }
 
-        .form-group input:focus {
-            border-color: #087cf5;
+        .form-control:focus {
+            border-color: #1769ff;
 
-            background: white;
-
-            box-shadow:
-                0 0 0 3px rgba(8,124,245,0.10);
+            box-shadow: 0 0 0 3px rgba(23, 105, 255, 0.08);
         }
 
-        /* TOMBOL LOGIN */
-        .login-button {
-            width: 100%;
-            height: 50px;
+        .form-control::placeholder {
+            color: #a0aec0;
+        }
+
+        /* PASSWORD */
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 70px;
+        }
+
+        .show-password {
+            position: absolute;
+
+            right: 12px;
+            top: 50%;
+
+            transform: translateY(-50%);
 
             border: none;
-            border-radius: 10px;
 
-            background: #087cf5;
+            background: transparent;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            cursor: pointer;
+        }
+
+        .show-password:hover {
+            color: #1769ff;
+        }
+
+        /* BUTTON */
+
+        .login-button {
+            width: 100%;
+
+            height: 45px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #1769ff;
+
             color: white;
 
-            font-size: 16px;
+            font-size: 14px;
+
             font-weight: 600;
 
             cursor: pointer;
 
-            transition: 0.3s;
-
-            margin-top: 8px;
+            margin-top: 5px;
         }
 
         .login-button:hover {
-            background: #075fc2;
-            transform: translateY(-1px);
+            background: #1257d6;
         }
 
-        /* LINK KEMBALI */
-        .back-link {
-            text-align: center;
-            margin-top: 22px;
+        /* FOOTER */
+
+        .footer {
+            margin-top: 25px;
+
+            font-size: 12px;
+
+            color: #94a3b8;
         }
 
-        .back-link a {
-            color: #087cf5;
+        /* MOBILE */
 
-            text-decoration: none;
+        @media (max-width: 480px) {
 
-            font-size: 14px;
-        }
-
-        .back-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
-        @media (max-width: 768px) {
-
-            body {
-                padding: 20px;
+            .login-box {
+                padding: 30px 25px;
             }
 
-            .login-wrapper {
-                padding: 10px;
+            .logo {
+                width: 90px;
+                height: 90px;
             }
 
-            .login-card {
-                flex-direction: column;
-            }
-
-            .login-left,
-            .login-right {
-                width: 100%;
-            }
-
-            .login-left {
-                padding: 40px 25px;
-            }
-
-            .login-right {
-                padding: 40px 25px;
-            }
-
-            .login-left h1 {
-                font-size: 25px;
-            }
-
-            .login-left h2 {
-                font-size: 18px;
-            }
-
-            .login-right h2 {
-                font-size: 25px;
+            .school-name {
+                font-size: 21px;
             }
         }
     </style>
@@ -282,154 +255,163 @@
 
 <body>
 
-<div class="login-wrapper">
+    <div class="login-box">
 
-    <div class="login-card">
+        <!-- LOGO SEKOLAH -->
 
-        <!-- ==========================================
-             BAGIAN KIRI
-        =========================================== -->
+        <img
+            src="{{ asset('uploads/logo.png') }}"
+            alt="Logo SDN CITATAH"
+            class="logo"
+        >
 
-        <div class="login-left">
 
-            <!-- ICON SEKOLAH -->
-            <div class="logo-box">
-                <i class="bi bi-mortarboard-fill"></i>
+        <!-- NAMA SEKOLAH -->
+
+        <h1 class="school-name">
+            SDN CITATAH
+        </h1>
+
+        <p class="school-description">
+            Sistem Informasi Sekolah
+        </p>
+
+
+        <!-- LOGIN -->
+
+        <h2 class="login-title">
+            Login
+        </h2>
+
+        <p class="login-subtitle">
+            Silakan masuk untuk melanjutkan
+        </p>
+
+
+        <!-- ERROR -->
+
+        @if ($errors->any())
+
+            <div class="error-message">
+                {{ $errors->first() }}
             </div>
 
-            <h1>
-                SDN CITATAH
-            </h1>
+        @endif
 
-            <h2>
-                Sistem Informasi Sekolah
-            </h2>
 
-            <p>
-                Selamat datang di halaman login administrator
-                Sistem Informasi SDN CITATAH.
-            </p>
+        <!-- FORM -->
 
-            <div class="school-info">
-                <i class="bi bi-building me-1"></i>
-                Administrasi Sekolah
+        <form
+            action="{{ route('login.process') }}"
+            method="POST"
+        >
+
+            @csrf
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Masukkan email"
+                    value="{{ old('email') }}"
+                    required
+                >
+
             </div>
 
-        </div>
 
+            <!-- PASSWORD -->
 
-        <!-- ==========================================
-             BAGIAN KANAN
-        =========================================== -->
+            <div class="form-group">
 
-        <div class="login-right">
+                <label for="password">
+                    Password
+                </label>
 
-            <h2>
-                Selamat Datang 👋
-            </h2>
-
-            <p class="subtitle">
-                Silakan login untuk masuk ke halaman admin.
-            </p>
-
-
-            <!-- PESAN ERROR -->
-
-            @if ($errors->any())
-
-                <div class="error-message">
-
-                    <i class="bi bi-exclamation-circle me-1"></i>
-
-                    {{ $errors->first() }}
-
-                </div>
-
-            @endif
-
-
-            <!-- FORM LOGIN -->
-
-            <form action="{{ route('login.process') }}" method="POST">
-
-                @csrf
-
-
-                <!-- EMAIL -->
-
-                <div class="form-group">
-
-                    <label for="email">
-                        <i class="bi bi-envelope me-1"></i>
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value="{{ old('email') }}"
-                        placeholder="Masukkan email"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- PASSWORD -->
-
-                <div class="form-group">
-
-                    <label for="password">
-                        <i class="bi bi-lock me-1"></i>
-                        Password
-                    </label>
+                <div class="password-wrapper">
 
                     <input
                         type="password"
                         id="password"
                         name="password"
+                        class="form-control"
                         placeholder="Masukkan password"
                         required
                     >
 
+                    <button
+                        type="button"
+                        class="show-password"
+                        id="showPassword"
+                        onclick="togglePassword()"
+                    >
+                        Lihat
+                    </button>
+
                 </div>
-
-
-                <!-- TOMBOL LOGIN -->
-
-                <button
-                    type="submit"
-                    class="login-button">
-
-                    <i class="bi bi-box-arrow-in-right me-1"></i>
-
-                    Login Admin
-
-                </button>
-
-            </form>
-
-
-            <!-- KEMBALI -->
-
-            <div class="back-link">
-
-                <a href="{{ route('landing.index') }}">
-
-                    <i class="bi bi-arrow-left me-1"></i>
-
-                    Kembali ke Landing Page
-
-                </a>
 
             </div>
 
+
+            <!-- TOMBOL -->
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Masuk
+            </button>
+
+        </form>
+
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+            © {{ date('Y') }} SDN CITATAH
         </div>
 
     </div>
 
-</div>
+
+    <script>
+
+        function togglePassword() {
+
+            const password =
+                document.getElementById('password');
+
+            const button =
+                document.getElementById('showPassword');
+
+
+            if (password.type === 'password') {
+
+                password.type = 'text';
+
+                button.innerText = 'Sembunyikan';
+
+            } else {
+
+                password.type = 'password';
+
+                button.innerText = 'Lihat';
+
+            }
+
+        }
+
+    </script>
 
 </body>
 </html>

@@ -1,15 +1,43 @@
-
 <nav class="pc-sidebar">
   <div class="navbar-wrapper">
 
     <!-- LOGO / HEADER -->
     <div class="m-header">
-      <a href="{{ url('/') }}" class="b-brand text-primary">
-        <span style="font-size: 22px; font-weight: 700;">
+
+      <a href="{{ url('/') }}"
+         class="b-brand text-primary"
+         style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+         ">
+
+        <!-- LOGO SEKOLAH -->
+        <img
+          src="{{ asset('uploads/logo.png') }}"
+          alt="Logo SDN CITATAH"
+          style="
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+          "
+        >
+
+        <!-- NAMA SEKOLAH -->
+        <span style="
+          font-size: 20px;
+          font-weight: 700;
+          color: #1683ff;
+          white-space: nowrap;
+        ">
           SDN CITATAH
         </span>
+
       </a>
+
     </div>
+
 
     <!-- NAVIGATION MENU -->
     <div class="navbar-content">
@@ -173,7 +201,12 @@
 
             <button type="submit"
                     class="pc-link"
-                    style="border: none; background: none; width: 100%; text-align: left;">
+                    style="
+                      border: none;
+                      background: none;
+                      width: 100%;
+                      text-align: left;
+                    ">
 
               <span class="pc-micon">
                 <i class="ti ti-logout"></i>

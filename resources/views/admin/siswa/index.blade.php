@@ -54,25 +54,28 @@
 
             </div>
 
+
             <div class="card-body">
-                @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Berhasil!</strong> {{ session('success') }}
 
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close">
-        </button>
-    </div>
-  @endif
-
+                {{-- NOTIFIKASI BERHASIL --}}
                 @if(session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible fade show"
+                         role="alert">
+
+                        <strong>Berhasil!</strong>
                         {{ session('success') }}
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close">
+                        </button>
+
                     </div>
                 @endif
 
+
+                {{-- TABEL --}}
                 <div class="table-responsive">
 
                     <table class="table table-hover align-middle">
@@ -87,6 +90,7 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
+
 
                         <tbody>
 
@@ -116,12 +120,17 @@
 
                                     <td>
 
+                                        {{-- EDIT --}}
                                         <a href="{{ route('siswa.edit', $data->id_siswa) }}"
                                            class="btn btn-warning btn-sm">
-                                            <i class="ti ti-edit"></i> Edit
+
+                                            <i class="ti ti-edit"></i>
+                                            Edit
 
                                         </a>
 
+
+                                        {{-- HAPUS --}}
                                         <form action="{{ route('siswa.destroy', $data->id_siswa) }}"
                                               method="POST"
                                               class="d-inline">
@@ -132,7 +141,9 @@
                                             <button type="submit"
                                                     class="btn btn-danger btn-sm"
                                                     onclick="return confirm('Yakin ingin menghapus data siswa ini?')">
-                                                <i class="ti ti-trash"></i> Hapus
+
+                                                <i class="ti ti-trash"></i>
+                                                Hapus
 
                                             </button>
 
@@ -141,6 +152,7 @@
                                     </td>
 
                                 </tr>
+
 
                             @empty
 
