@@ -16,11 +16,27 @@ class PengumumanController extends Controller
 
     public function create()
     {
+        // Hanya Administrator yang boleh menambah pengumuman
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk menambah pengumuman.');
+        }
+
         return view('admin.pengumuman.create');
     }
 
     public function store(Request $request)
     {
+        // Hanya Administrator yang boleh menyimpan pengumuman
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk menambah pengumuman.');
+        }
+
         $request->validate([
             'judul' => 'required|max:255',
             'isi' => 'required',
@@ -58,15 +74,52 @@ class PengumumanController extends Controller
             ->with('success', 'Pengumuman berhasil disimpan!');
     }
 
-    public function edit($id)
+
+    /*
+    |--------------------------------------------------------------------------
+    | DETAIL PENGUMUMAN
+    |--------------------------------------------------------------------------
+    */
+
+    public function show($id)
     {
         $pengumuman = Pengumuman::findOrFail($id);
 
-        return view('admin.pengumuman.edit', compact('pengumuman'));
+        return view(
+            'admin.pengumuman.show',
+            compact('pengumuman')
+        );
+    }
+
+
+    public function edit($id)
+    {
+        // Hanya Administrator yang boleh mengedit pengumuman
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk mengedit pengumuman.');
+        }
+
+        $pengumuman = Pengumuman::findOrFail($id);
+
+        return view(
+            'admin.pengumuman.edit',
+            compact('pengumuman')
+        );
     }
 
     public function update(Request $request, $id)
     {
+        // Hanya Administrator yang boleh memperbarui pengumuman
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk mengedit pengumuman.');
+        }
+
         $request->validate([
             'judul' => 'required|max:255',
             'isi' => 'required',
@@ -89,6 +142,7 @@ class PengumumanController extends Controller
             }
 
             if ($pengumuman->gambar) {
+
                 $gambarLama = $folder . '/' . $pengumuman->gambar;
 
                 if (file_exists($gambarLama)) {
@@ -114,6 +168,14 @@ class PengumumanController extends Controller
 
     public function destroy($id)
     {
+        // Hanya Administrator yang boleh menghapus pengumuman
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk menghapus pengumuman.');
+        }
+
         $pengumuman = Pengumuman::findOrFail($id);
 
         if ($pengumuman->gambar) {

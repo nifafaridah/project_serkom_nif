@@ -2,81 +2,178 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller
 {
-    // Menampilkan data siswa
+    // ============================
+    // MENAMPILKAN DATA SISWA
+    // ============================
+
     public function index()
     {
-        $siswa = Siswa::all();
+        $siswa = DB::table('siswa')->get();
 
         return view('admin.siswa.index', compact('siswa'));
     }
 
 
-    // Menampilkan form tambah siswa
+    // ============================
+    // MENAMPILKAN DETAIL SISWA
+    // ============================
+
+    public function show($id)
+    {
+        $siswa = DB::table('siswa')
+            ->where('id_siswa', $id)
+            ->first();
+
+        if (!$siswa) {
+            return redirect()
+                ->route('siswa.index')
+                ->with('error', 'Data siswa tidak ditemukan!');
+        }
+
+        return view('admin.siswa.show', compact('siswa'));
+    }
+
+
+    // ============================
+    // MENAMPILKAN FORM TAMBAH SISWA
+    // ============================
+
     public function create()
     {
+        // Hanya Administrator yang boleh menambah siswa
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk menambah data siswa.');
+        }
+
         return view('admin.siswa.create');
     }
 
 
-    // Menyimpan data siswa
+    // ============================
+    // MENYIMPAN DATA SISWA
+    // ============================
+
     public function store(Request $request)
     {
+        // Hanya Administrator yang boleh menyimpan siswa
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk menambah data siswa.');
+        }
+
         $request->validate([
-            'nisn' => 'required',
-            'nama_siswa' => 'required|max:40',
+            'nisn'          => 'required',
+            'nama_siswa'    => 'required',
             'jenis_kelamin' => 'required',
-            'tahun_masuk' => 'required',
+            'tahun_masuk'   => 'required',
         ]);
 
-        // Membuat data siswa baru
-        $siswa = new Siswa();
 
-        $siswa->nisn = $request->nisn;
-        $siswa->nama_siswa = $request->nama_siswa;
-        $siswa->jenis_kelamin = $request->jenis_kelamin;
-        $siswa->tahun_masuk = $request->tahun_masuk;
+        // ============================
+        // MEMBUAT ID SISWA
+        // ============================
 
-        // Simpan ke database
-        $siswa->save();
+        $jumlahSiswa = DB::table('siswa')->count();
+
+        $idSiswa = $jumlahSiswa + 1;
+
+
+        // ============================
+        // SIMPAN DATA
+        // ============================
+
+        DB::table('siswa')->insert([
+
+            'id_siswa'      => $idSiswa,
+            'nisn'          => $request->nisn,
+            'nama_siswa'    => $request->nama_siswa,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tahun_masuk'   => $request->tahun_masuk,
+
+        ]);
+
 
         return redirect()
             ->route('siswa.index')
-            ->with('success', 'Data siswa berhasil ditambahkan!');
+            ->with('success', 'Data siswa berhasil disimpan!');
     }
 
 
-    // Form edit siswa
+    // ============================
+    // FORM EDIT SISWA
+    // ============================
+
     public function edit($id)
     {
-        $siswa = Siswa::findOrFail($id);
+        // Hanya Administrator yang boleh edit
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk mengedit data siswa.');
+        }
+
+        $siswa = DB::table('siswa')
+            ->where('id_siswa', $id)
+            ->first();
+
+        if (!$siswa) {
+            return redirect()
+                ->route('siswa.index')
+                ->with('error', 'Data siswa tidak ditemukan!');
+        }
 
         return view('admin.siswa.edit', compact('siswa'));
     }
 
 
-    // Update data siswa
+    // ============================
+    // UPDATE SISWA
+    // ============================
+
     public function update(Request $request, $id)
     {
+        // Hanya Administrator yang boleh update
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk mengubah data siswa.');
+        }
+
         $request->validate([
-            'nisn' => 'required',
-            'nama_siswa' => 'required|max:40',
+            'nisn'          => 'required',
+            'nama_siswa'    => 'required',
             'jenis_kelamin' => 'required',
-            'tahun_masuk' => 'required',
+            'tahun_masuk'   => 'required',
         ]);
 
-        $siswa = Siswa::findOrFail($id);
 
-        $siswa->nisn = $request->nisn;
-        $siswa->nama_siswa = $request->nama_siswa;
-        $siswa->jenis_kelamin = $request->jenis_kelamin;
-        $siswa->tahun_masuk = $request->tahun_masuk;
+        // Cari data siswa
+        $siswa = DB::table('siswa')
+            ->where('id_siswa', $id)
+            ->first();
 
-        $siswa->save();
+        if (!$siswa) {
+            return redirect()
+                ->route('siswa.index')
+                ->with('error', 'Data siswa tidak ditemukan!');
+        }
+
+
+        // ============================
+        // UPDATE DATA
+        // ============================
+
+        DB::table('siswa')
+            ->where('id_siswa', $id)
+            ->update([
+
+                'nisn'          => $request->nisn,
+                'nama_siswa'    => $request->nama_siswa,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'tahun_masuk'   => $request->tahun_masuk,
+
+            ]);
+
 
         return redirect()
             ->route('siswa.index')
@@ -84,12 +181,31 @@ class SiswaController extends Controller
     }
 
 
-    // Hapus data siswa
+    // ============================
+    // HAPUS SISWA
+    // ============================
+
     public function destroy($id)
     {
-        $siswa = Siswa::findOrFail($id);
+        // Hanya Administrator yang boleh menghapus
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk menghapus data siswa.');
+        }
 
-        $siswa->delete();
+        // Cari data siswa
+        $siswa = DB::table('siswa')
+            ->where('id_siswa', $id)
+            ->first();
+
+
+        if ($siswa) {
+
+            // Hapus data siswa
+            DB::table('siswa')
+                ->where('id_siswa', $id)
+                ->delete();
+        }
+
 
         return redirect()
             ->route('siswa.index')

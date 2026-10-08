@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.main')
 
 @section('content')
@@ -49,13 +48,20 @@
                     </p>
                 </div>
 
-                <a href="{{ route('galeri.create') }}"
-                   class="btn btn-primary">
 
-                    <i class="ti ti-plus me-1"></i>
-                    Tambah Galeri
+                {{-- TAMBAH GALERI --}}
+                {{-- Hanya Administrator --}}
+                @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
 
-                </a>
+                    <a href="{{ route('galeri.create') }}"
+                       class="btn btn-primary">
+
+                        <i class="ti ti-plus me-1"></i>
+                        Tambah Galeri
+
+                    </a>
+
+                @endif
 
             </div>
 
@@ -128,7 +134,7 @@
             {{-- Tabel --}}
             <div class="table-responsive">
 
-                <table class="table table-hover align-middle">
+                <table class="table table-bordered table-hover align-middle">
 
                     <thead>
 
@@ -150,7 +156,7 @@
                                 Deskripsi
                             </th>
 
-                            <th style="width: 190px;">
+                            <th style="width: 280px;">
                                 Aksi
                             </th>
 
@@ -251,41 +257,61 @@
                                 {{-- Aksi --}}
                                 <td>
 
-                                    <div class="d-flex gap-2">
+                                    <div class="d-flex gap-2 flex-nowrap">
 
-                                        {{-- Edit --}}
+                                        {{-- DETAIL --}}
+                                        {{-- Semua role boleh melihat detail --}}
                                         <a
-                                            href="{{ route('galeri.edit', $item->id) }}"
-                                            class="btn btn-warning btn-sm"
+                                            href="{{ route('galeri.show', $item->id) }}"
+                                            class="btn btn-info btn-sm"
+                                            title="Detail Galeri"
                                         >
 
-                                            <i class="ti ti-edit me-1"></i>
-                                            Edit
+                                            <i class="ti ti-eye me-1"></i>
 
                                         </a>
 
 
-                                        {{-- Hapus --}}
-                                        <form
-                                            action="{{ route('galeri.destroy', $item->id) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('Yakin ingin menghapus galeri ini?')"
-                                        >
+                                        {{-- EDIT + HAPUS --}}
+                                        {{-- Hanya Administrator --}}
+                                        @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
 
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button
-                                                type="submit"
-                                                class="btn btn-danger btn-sm"
+                                            {{-- EDIT --}}
+                                            <a
+                                                href="{{ route('galeri.edit', $item->id) }}"
+                                                class="btn btn-warning btn-sm"
+                                                title="Edit Galeri"
                                             >
 
-                                                <i class="ti ti-trash me-1"></i>
-                                                Hapus
+                                                <i class="ti ti-edit me-1"></i>
 
-                                            </button>
+                                            </a>
 
-                                        </form>
+
+                                            {{-- HAPUS --}}
+                                            <form
+                                                action="{{ route('galeri.destroy', $item->id) }}"
+                                                method="POST"
+                                                class="d-inline"
+                                                onsubmit="return confirm('Yakin ingin menghapus galeri ini?')"
+                                            >
+
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-danger btn-sm"
+                                                    title="Hapus Galeri"
+                                                >
+
+                                                    <i class="ti ti-trash me-1"></i>
+
+                                                </button>
+
+                                            </form>
+
+                                        @endif
 
                                     </div>
 

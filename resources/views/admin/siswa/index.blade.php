@@ -2,18 +2,24 @@
 
 @section('content')
 
-<div class="row">
+<div class="page-header mb-4">
 
-    {{-- BAGIAN ATAS --}}
-    <div class="col-12">
-        <div class="page-header mb-4">
-            <div class="page-block">
+    <div class="page-block">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-12">
 
                 <div class="page-header-title">
-                    <h5 class="mb-0">Data Siswa</h5>
+
+                    <h5 class="m-b-10">
+                        Data Siswa
+                    </h5>
+
                 </div>
 
                 <ul class="breadcrumb">
+
                     <li class="breadcrumb-item">
                         <a href="{{ url('/') }}">
                             Home
@@ -23,163 +29,306 @@
                     <li class="breadcrumb-item" aria-current="page">
                         Siswa
                     </li>
+
                 </ul>
 
             </div>
+
         </div>
+
+    </div>
+
+</div>
+
+
+<div class="card mb-0">
+
+    {{-- HEADER CARD --}}
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <div>
+
+            <h5 class="mb-1">
+                Daftar Siswa
+            </h5>
+
+            <p class="mb-0 text-muted">
+                Kelola data siswa sekolah
+            </p>
+
+        </div>
+
+
+        {{-- TAMBAH SISWA HANYA UNTUK ADMINISTRATOR --}}
+        @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
+
+            <a href="{{ route('siswa.create') }}"
+               class="btn btn-primary btn-sm">
+
+                <i class="ti ti-plus me-1"></i>
+                Tambah Siswa
+
+            </a>
+
+        @endif
+
     </div>
 
 
-    {{-- DATA SISWA --}}
-    <div class="col-12">
+    {{-- BODY CARD --}}
+    <div class="card-body">
 
-        <div class="card">
 
-            <div class="card-header d-flex justify-content-between align-items-center">
+        {{-- PESAN BERHASIL --}}
+        @if(session('success'))
 
-                <div>
-                    <h5 class="mb-1">Daftar Siswa</h5>
-                    <p class="text-muted mb-0">
-                        Kelola data siswa sekolah
-                    </p>
-                </div>
+            <div class="alert alert-success alert-dismissible fade show"
+                 role="alert">
 
-                <a href="{{ route('siswa.create') }}"
-                   class="btn btn-primary">
+                <strong>
+                    Berhasil!
+                </strong>
 
-                    <i class="ti ti-plus me-1"></i>
-                    Tambah Siswa
+                {{ session('success') }}
 
-                </a>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close">
+                </button>
 
             </div>
 
-
-            <div class="card-body">
-
-                {{-- NOTIFIKASI BERHASIL --}}
-                @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show"
-                         role="alert">
-
-                        <strong>Berhasil!</strong>
-                        {{ session('success') }}
-
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="alert"
-                                aria-label="Close">
-                        </button>
-
-                    </div>
-                @endif
+        @endif
 
 
-                {{-- TABEL --}}
-                <div class="table-responsive">
+        {{-- PESAN ERROR --}}
+        @if(session('error'))
 
-                    <table class="table table-hover align-middle">
+            <div class="alert alert-danger alert-dismissible fade show"
+                 role="alert">
 
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>NISN</th>
-                                <th>Nama Siswa</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Tahun Masuk</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
+                <strong>
+                    Gagal!
+                </strong>
+
+                {{ session('error') }}
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close">
+                </button>
+
+            </div>
+
+        @endif
 
 
-                        <tbody>
+        {{-- ERROR VALIDASI --}}
+        @if($errors->any())
 
-                            @forelse($siswa as $data)
+            <div class="alert alert-danger">
 
-                                <tr>
+                <strong>
+                    Terjadi kesalahan:
+                </strong>
 
-                                    <td>
-                                        {{ $loop->iteration }}
-                                    </td>
+                <ul class="mb-0 mt-2">
 
-                                    <td>
-                                        {{ $data->nisn }}
-                                    </td>
+                    @foreach($errors->all() as $error)
 
-                                    <td>
-                                        {{ $data->nama_siswa }}
-                                    </td>
+                        <li>
+                            {{ $error }}
+                        </li>
 
-                                    <td>
-                                        {{ $data->jenis_kelamin }}
-                                    </td>
+                    @endforeach
 
-                                    <td>
-                                        {{ $data->tahun_masuk }}
-                                    </td>
+                </ul>
 
-                                    <td>
+            </div>
+
+        @endif
+
+
+        {{-- TABLE --}}
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            No
+                        </th>
+
+                        <th>
+                            NISN
+                        </th>
+
+                        <th>
+                            Nama Siswa
+                        </th>
+
+                        <th>
+                            Jenis Kelamin
+                        </th>
+
+                        <th>
+                            Tahun Masuk
+                        </th>
+
+                        <th>
+                            Aksi
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @forelse($siswa as $key => $item)
+
+                        <tr>
+
+                            {{-- NOMOR --}}
+                            <td>
+                                {{ $key + 1 }}
+                            </td>
+
+
+                            {{-- NISN --}}
+                            <td>
+                                {{ $item->nisn ?? '-' }}
+                            </td>
+
+
+                            {{-- NAMA --}}
+                            <td>
+
+                                <strong>
+                                    {{ $item->nama_siswa }}
+                                </strong>
+
+                            </td>
+
+
+                            {{-- JENIS KELAMIN --}}
+                            <td>
+
+                                {{ $item->jenis_kelamin ?? '-' }}
+
+                            </td>
+
+
+                            {{-- TAHUN MASUK --}}
+                            <td>
+
+                                {{ $item->tahun_masuk ?? '-' }}
+
+                            </td>
+
+
+                            {{-- AKSI --}}
+                            <td>
+
+                                <div class="d-flex gap-2">
+
+
+                                    {{-- DETAIL --}}
+                                    <a
+                                        href="{{ route('siswa.show', $item->id_siswa) }}"
+                                        class="btn btn-info btn-sm"
+                                        title="Detail Siswa"
+                                    >
+
+                                        <i class="ti ti-eye"></i>
+
+                                    </a>
+
+
+                                    {{-- EDIT & HAPUS HANYA UNTUK ADMINISTRATOR --}}
+                                    @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
 
                                         {{-- EDIT --}}
-                                        <a href="{{ route('siswa.edit', $data->id_siswa) }}"
-                                           class="btn btn-warning btn-sm">
+                                        <a
+                                            href="{{ route('siswa.edit', $item->id_siswa) }}"
+                                            class="btn btn-warning btn-sm"
+                                            title="Edit Siswa"
+                                        >
 
                                             <i class="ti ti-edit"></i>
-                                            Edit
 
                                         </a>
 
 
                                         {{-- HAPUS --}}
-                                        <form action="{{ route('siswa.destroy', $data->id_siswa) }}"
-                                              method="POST"
-                                              class="d-inline">
+                                        <form
+                                            action="{{ route('siswa.destroy', $item->id_siswa) }}"
+                                            method="POST"
+                                            class="d-inline"
+                                            onsubmit="return confirm('Yakin ingin menghapus data siswa ini?')"
+                                        >
 
                                             @csrf
+
                                             @method('DELETE')
 
-                                            <button type="submit"
-                                                    class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Yakin ingin menghapus data siswa ini?')">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                title="Hapus Siswa"
+                                            >
 
                                                 <i class="ti ti-trash"></i>
-                                                Hapus
 
                                             </button>
 
                                         </form>
 
-                                    </td>
-
-                                </tr>
+                                    @endif
 
 
-                            @empty
+                                </div>
 
-                                <tr>
+                            </td>
 
-                                    <td colspan="6"
-                                        class="text-center py-5">
+                        </tr>
 
-                                        <i class="ti ti-users fs-1 text-muted"></i>
 
-                                        <p class="text-muted mb-0 mt-2">
-                                            Belum ada data siswa
-                                        </p>
+                    @empty
 
-                                    </td>
+                        {{-- BELUM ADA DATA --}}
+                        <tr>
 
-                                </tr>
+                            <td
+                                colspan="6"
+                                class="text-center text-muted py-5"
+                            >
 
-                            @endforelse
+                                <i
+                                    class="ti ti-users"
+                                    style="font-size: 40px;"
+                                >
+                                </i>
 
-                        </tbody>
+                                <p class="mt-2 mb-0">
+                                    Belum ada data siswa.
+                                </p>
 
-                    </table>
+                            </td>
 
-                </div>
+                        </tr>
 
-            </div>
+                    @endforelse
+
+                </tbody>
+
+            </table>
 
         </div>
 

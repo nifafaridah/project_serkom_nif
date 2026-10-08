@@ -20,12 +20,8 @@ use App\Http\Controllers\PrestasiController;
 | LANDING PAGE
 |--------------------------------------------------------------------------
 */
-Route::get('/', [LandingController::class, 'index'])
-    ->name('landing.index');
-
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+Route::get('/', [LandingController::class, 'index']) ->name('landing.index');
+Route::get('/dashboard', [DashboardController::class, 'index']) ->middleware('auth') ->name('dashboard');
 
 
 /*
@@ -47,9 +43,7 @@ Route::post('/login', [AuthController::class, 'login'])
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index']) ->middleware('auth') ->name('dashboard');
 
 
 /*
@@ -58,9 +52,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 |--------------------------------------------------------------------------
 */
 
-Route::post('/logout', [AuthController::class, 'logout'])
-    ->middleware('auth')
-    ->name('logout');
+Route::post('/logout', [AuthController::class, 'logout']) ->middleware('auth') ->name('logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -68,17 +60,10 @@ Route::post('/logout', [AuthController::class, 'logout'])
 |--------------------------------------------------------------------------
 */
 
-Route::get('/profil-sekolah', [ProfilSekolahController::class, 'index'])
-    ->name('profil-sekolah.index');
-
-Route::get('/profil-sekolah/edit', [ProfilSekolahController::class, 'edit'])
-    ->name('profil-sekolah.edit');
-
-Route::post('/profil-sekolah', [ProfilSekolahController::class, 'store'])
-    ->name('profil-sekolah.store');
-
-Route::put('/profil-sekolah', [ProfilSekolahController::class, 'update'])
-    ->name('profil-sekolah.update');
+Route::get('/profil-sekolah', [ProfilSekolahController::class, 'index']) ->name('profil-sekolah.index');
+Route::get('/profil-sekolah/edit', [ProfilSekolahController::class, 'edit']) ->name('profil-sekolah.edit');
+Route::post('/profil-sekolah', [ProfilSekolahController::class, 'store']) ->name('profil-sekolah.store');
+Route::put('/profil-sekolah', [ProfilSekolahController::class, 'update'])->name('profil-sekolah.update');
 
 
 /*
@@ -120,7 +105,6 @@ Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa.ed
 Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa.update');
 Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
 
-
 /*
 |--------------------------------------------------------------------------
 | EKSTRAKURIKULER
@@ -130,17 +114,17 @@ Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.d
 Route::get('/ekstrakurikuler', [EkstrakurikulerController::class, 'index'])->name('ekstrakurikuler.index');
 Route::get('/ekstrakurikuler/create', [EkstrakurikulerController::class, 'create'])->name('ekstrakurikuler.create');
 Route::post('/ekstrakurikuler', [EkstrakurikulerController::class, 'store'])->name('ekstrakurikuler.store');
+
+/* TAMBAHAN DETAIL */
+Route::get('/ekstrakurikuler/{id}', [EkstrakurikulerController::class, 'show']) ->name('ekstrakurikuler.show');
 Route::get('/ekstrakurikuler/{id}/edit', [EkstrakurikulerController::class, 'edit'])->name('ekstrakurikuler.edit');
 Route::put('/ekstrakurikuler/{id}', [EkstrakurikulerController::class, 'update'])->name('ekstrakurikuler.update');
 Route::delete('/ekstrakurikuler/{id}', [EkstrakurikulerController::class, 'destroy'])->name('ekstrakurikuler.destroy');
-
 Route::get('/ekstrakurikuler', [EkstrakurikulerController::class, 'index'])->name('ekstrakurikuler.index');
 Route::get('/ekstrakurikuler/create', [EkstrakurikulerController::class, 'create'])->name('ekstrakurikuler.create');
 Route::post('/ekstrakurikuler', [EkstrakurikulerController::class, 'store'])->name('ekstrakurikuler.store');
 Route::put('/ekstrakurikuler/{id}', [EkstrakurikulerController::class, 'update'])->name('ekstrakurikuler.update');
 Route::delete('/ekstrakurikuler/{id}', [EkstrakurikulerController::class, 'destroy'])->name('ekstrakurikuler.destroy');
-
-
 /*
 |--------------------------------------------------------------------------
 | BERITA
@@ -150,24 +134,27 @@ Route::delete('/ekstrakurikuler/{id}', [EkstrakurikulerController::class, 'destr
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::get('/berita/create', [BeritaController::class, 'create'])->name('berita.create');
 Route::post('/berita', [BeritaController::class, 'store'])->name('berita.store');
+
+/* TAMBAHAN DETAIL */
+Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('berita.show');
 Route::get('/berita/{id}/edit', [BeritaController::class, 'edit'])->name('berita.edit');
 Route::put('/berita/{id}', [BeritaController::class, 'update'])->name('berita.update');
 Route::delete('/berita/{id}', [BeritaController::class, 'destroy'])->name('berita.destroy');
-
-
 /*
 |--------------------------------------------------------------------------
 | PENGUMUMAN
 |--------------------------------------------------------------------------
 */
 
-Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman.index');
-Route::get('/pengumuman/create', [PengumumanController::class, 'create'])->name('pengumuman.create');
-Route::post('/pengumuman', [PengumumanController::class, 'store'])->name('pengumuman.store');
+Route::get('/pengumuman', [PengumumanController::class, 'index']) ->name('pengumuman.index');
+Route::get('/pengumuman/create', [PengumumanController::class, 'create'])  ->name('pengumuman.create');
+Route::post('/pengumuman', [PengumumanController::class, 'store']) ->name('pengumuman.store');
+
+/* DETAIL PENGUMUMAN */
+Route::get('/pengumuman/{id}', [PengumumanController::class, 'show'])->name('pengumuman.show');
 Route::get('/pengumuman/{id}/edit', [PengumumanController::class, 'edit'])->name('pengumuman.edit');
 Route::put('/pengumuman/{id}', [PengumumanController::class, 'update'])->name('pengumuman.update');
-Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy'])->name('pengumuman.destroy');
-
+Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy']) ->name('pengumuman.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -178,23 +165,10 @@ Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy'])->nam
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
 Route::post('/galeri', [GaleriController::class, 'store'])->name('galeri.store');
+Route::get('/galeri/{id}', [GaleriController::class, 'show'])->name('galeri.show');
 Route::get('/galeri/{id}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
 Route::put('/galeri/{id}', [GaleriController::class, 'update'])->name('galeri.update');
 Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
-
-
-/*
-|--------------------------------------------------------------------------
-| USERS
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 
 /*
@@ -206,11 +180,10 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
 Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-
-
 /*
 |--------------------------------------------------------------------------
 | PRESTASI
@@ -219,3 +192,15 @@ Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.dest
 
 Route::resource('prestasi', PrestasiController::class);
 Route::resource('prestasi', PrestasiController::class);
+
+/*
+|--------------------------------------------------------------------------
+| PROFIL PENGGUNA
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/profil', function () {
+    return view('admin.profil.index');
+})
+    ->middleware('auth')
+    ->name('profil.index');

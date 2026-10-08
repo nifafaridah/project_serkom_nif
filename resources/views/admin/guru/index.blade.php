@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.main')
 
 @section('content')
@@ -46,21 +45,34 @@
 
     {{-- HEADER CARD --}}
     <div class="card-header d-flex justify-content-between align-items-center">
+
         <div>
+
             <h5 class="mb-1">
                 Daftar Guru
             </h5>
+
             <p class="mb-0 text-muted">
                 Kelola data guru sekolah
             </p>
+
         </div>
 
 
-        <a href="{{ route('guru.create') }}"
-           class="btn btn-primary btn-sm">
-            <i class="ti ti-plus me-1"></i>
-            Tambah Guru
-        </a>
+        {{-- TAMBAH GURU HANYA UNTUK ADMINISTRATOR --}}
+        @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
+
+            <a href="{{ route('guru.create') }}"
+               class="btn btn-primary btn-sm">
+
+                <i class="ti ti-plus me-1"></i>
+
+                Tambah Guru
+
+            </a>
+
+        @endif
+
     </div>
 
 
@@ -143,7 +155,7 @@
         {{-- TABLE --}}
         <div class="table-responsive">
 
-            <table class="table table-hover align-middle">
+            <table class="table table-bordered table-hover align-middle">
 
                 <thead>
 
@@ -248,41 +260,56 @@
 
                                 <div class="d-flex gap-2">
 
-                                    {{-- EDIT --}}
+
+                                    {{-- DETAIL --}}
                                     <a
-                                        href="{{ route('guru.edit', $item->id_guru) }}"
-                                        class="btn btn-warning btn-sm"
-                                        title="Edit Guru"
+                                        href="{{ route('guru.show', $item->id_guru) }}"
+                                        class="btn btn-info btn-sm"
+                                        title="Detail Guru"
                                     >
 
-                                        <i class="ti ti-edit"></i> Edit 
-
+                                        <i class="ti ti-eye"></i>
                                     </a>
 
 
-                                    {{-- HAPUS --}}
-                                    <form
-                                        action="{{ route('guru.destroy', $item->id_guru) }}"
-                                        method="POST"
-                                        class="d-inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus data guru ini?')"
-                                    >
+                                    {{-- EDIT & HAPUS HANYA UNTUK ADMINISTRATOR --}}
+                                    @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
 
-                                        @csrf
-
-                                        @method('DELETE')
-
-                                        <button
-                                            type="submit"
-                                            class="btn btn-danger btn-sm"
-                                            title="Hapus Guru"
+                                        {{-- EDIT --}}
+                                        <a
+                                            href="{{ route('guru.edit', $item->id_guru) }}"
+                                            class="btn btn-warning btn-sm"
+                                            title="Edit Guru"
                                         >
 
-                                            <i class="ti ti-trash"></i> Hapus 
+                                            <i class="ti ti-edit"></i>
+                                        </a>
 
-                                        </button>
 
-                                    </form>
+                                        {{-- HAPUS --}}
+                                        <form
+                                            action="{{ route('guru.destroy', $item->id_guru) }}"
+                                            method="POST"
+                                            class="d-inline"
+                                            onsubmit="return confirm('Yakin ingin menghapus data guru ini?')"
+                                        >
+
+                                            @csrf
+
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                title="Hapus Guru"
+                                            >
+
+                                                <i class="ti ti-trash"></i>
+                                            </button>
+
+                                        </form>
+
+                                    @endif
 
                                 </div>
 
@@ -328,4 +355,3 @@
 </div>
 
 @endsection
-

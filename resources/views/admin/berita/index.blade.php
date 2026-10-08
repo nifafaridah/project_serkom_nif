@@ -1,4 +1,3 @@
-```blade
 @extends('admin.layouts.main')
 
 @section('content')
@@ -52,13 +51,19 @@
                 </div>
 
 
-                <a href="{{ route('berita.create') }}"
-                   class="btn btn-primary">
+                {{-- TAMBAH BERITA --}}
+                {{-- Hanya Administrator --}}
+                @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
 
-                    <i class="ti ti-plus"></i>
-                    Tambah Berita
+                    <a href="{{ route('berita.create') }}"
+                       class="btn btn-primary">
 
-                </a>
+                        <i class="ti ti-plus"></i>
+                        Tambah Berita
+
+                    </a>
+
+                @endif
 
             </div>
 
@@ -70,7 +75,7 @@
 
             <div class="table-responsive">
 
-                <table class="table">
+                <table class="table table-bordered table-hover align-middle">
 
                     <thead>
 
@@ -139,35 +144,61 @@
                             </td>
 
 
+                            {{-- AKSI --}}
                             <td>
 
-                                <a href="{{ route('berita.edit', $berita->id) }}"
-                                   class="btn btn-warning btn-sm">
+                                <div class="d-flex gap-2 flex-nowrap">
+
+                                    {{-- DETAIL --}}
+                                    {{-- Semua role boleh melihat detail --}}
+                                    <a href="{{ route('berita.show', $berita->id) }}"
+                                       class="btn btn-info btn-sm"
+                                       title="Detail Berita">
+
+                                        <i class="ti ti-eye"></i>
+                                        Detail
+
+                                    </a>
 
 
+                                    {{-- EDIT --}}
+                                    {{-- Hanya Administrator --}}
+                                    @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
 
-                                    <i class="ti ti-edit"></i> Edit
+                                        <a href="{{ route('berita.edit', $berita->id) }}"
+                                           class="btn btn-warning btn-sm"
+                                           title="Edit Berita">
+
+                                            <i class="ti ti-edit"></i>
+                                            Edit
+
+                                        </a>
 
 
-                                </a>
+                                        {{-- HAPUS --}}
+                                        <form action="{{ route('berita.destroy', $berita->id) }}"
+                                              method="POST"
+                                              class="d-inline">
 
+                                            @csrf
 
-                                <form action="{{ route('berita.destroy', $berita->id) }}"
-                                      method="POST"
-                                      class="d-inline">
+                                            @method('DELETE')
 
-                                    @csrf
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm"
+                                                    title="Hapus Berita"
+                                                    onclick="return confirm('Yakin ingin menghapus berita ini?')">
 
-                                    @method('DELETE')
+                                                <i class="ti ti-trash"></i>
+                                                Hapus
 
-                                    <button type="submit"
-                                            class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin ingin menghapus berita ini?')">
-                                        <i class="ti ti-trash"></i> Hapus
+                                            </button>
 
-                                    </button>
+                                        </form>
 
-                                </form>
+                                    @endif
+
+                                </div>
 
                             </td>
 
@@ -214,4 +245,3 @@
 </div>
 
 @endsection
-```

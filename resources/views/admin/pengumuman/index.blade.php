@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.main')
 
 @section('content')
@@ -49,13 +48,20 @@
                     </p>
                 </div>
 
-                <a href="{{ route('pengumuman.create') }}"
-                   class="btn btn-primary">
 
-                    <i class="ti ti-plus"></i>
-                    Tambah Pengumuman
+                {{-- TAMBAH PENGUMUMAN --}}
+                {{-- Hanya Administrator --}}
+                @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
 
-                </a>
+                    <a href="{{ route('pengumuman.create') }}"
+                       class="btn btn-primary">
+
+                        <i class="ti ti-plus"></i>
+                        Tambah Pengumuman
+
+                    </a>
+
+                @endif
 
             </div>
 
@@ -67,21 +73,25 @@
 
 
             @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Berhasil!</strong> {{ session('success') }}
 
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close">
-        </button>
-    </div>
-   @endif
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+                    <strong>Berhasil!</strong> {{ session('success') }}
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+            @endif
 
 
             <div class="table-responsive">
 
-                <table class="table">
+                <table class="table table-bordered table-hover align-middle">
 
                     <thead>
 
@@ -152,31 +162,55 @@
 
                             <td>
 
-                                <a href="{{ route('pengumuman.edit', $pengumuman->id) }}"
-                                   class="btn btn-warning btn-sm">
-                                    <i class="ti ti-edit"></i> Edit
+                                <div class="d-flex gap-2 flex-nowrap">
+
+                                    {{-- DETAIL --}}
+                                    {{-- Semua role boleh melihat detail --}}
+                                    <a href="{{ route('pengumuman.show', $pengumuman->id) }}"
+                                       class="btn btn-info btn-sm"
+                                       title="Detail Pengumuman">
+
+                                        <i class="ti ti-eye"></i>
+
+                                    </a>
 
 
-                                </a>
+                                    {{-- EDIT --}}
+                                    {{-- Hanya Administrator --}}
+                                    @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
+
+                                        <a href="{{ route('pengumuman.edit', $pengumuman->id) }}"
+                                           class="btn btn-warning btn-sm"
+                                           title="Edit Pengumuman">
+
+                                            <i class="ti ti-edit"></i>
+
+                                        </a>
 
 
-                                <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
-                                      method="POST"
-                                      class="d-inline">
+                                        {{-- HAPUS --}}
+                                        <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
+                                              method="POST"
+                                              class="d-inline">
 
-                                    @csrf
+                                            @csrf
 
-                                    @method('DELETE')
+                                            @method('DELETE')
 
-                                    <button type="submit"
-                                            class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin ingin menghapus pengumuman ini?')">
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm"
+                                                    title="Hapus Pengumuman"
+                                                    onclick="return confirm('Yakin ingin menghapus pengumuman ini?')">
 
-                                        <i class="ti ti-trash"></i> Hapus
+                                                <i class="ti ti-trash"></i>
 
-                                    </button>
+                                            </button>
 
-                                </form>
+                                        </form>
+
+                                    @endif
+
+                                </div>
 
                             </td>
 
@@ -223,4 +257,3 @@
 </div>
 
 @endsection
-

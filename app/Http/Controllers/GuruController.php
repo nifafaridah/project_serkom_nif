@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class GuruController extends Controller
 {
-    // Menampilkan data guru
+    // ============================
+    // MENAMPILKAN DATA GURU
+    // ============================
+
     public function index()
     {
         $guru = DB::table('guru')->get();
@@ -16,16 +19,52 @@ class GuruController extends Controller
     }
 
 
-    // Menampilkan form tambah guru
+    // ============================
+    // MENAMPILKAN DETAIL GURU
+    // ============================
+
+    public function show($id)
+    {
+        $guru = DB::table('guru')
+            ->where('id_guru', $id)
+            ->first();
+
+        if (!$guru) {
+            return redirect()
+                ->route('guru.index')
+                ->with('error', 'Data guru tidak ditemukan!');
+        }
+
+        return view('admin.guru.show', compact('guru'));
+    }
+
+
+    // ============================
+    // MENAMPILKAN FORM TAMBAH GURU
+    // ============================
+
     public function create()
     {
+        // Hanya Administrator yang boleh menambah guru
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk menambah data guru.');
+        }
+
         return view('admin.guru.create');
     }
 
 
-    // Menyimpan data guru
+    // ============================
+    // MENYIMPAN DATA GURU
+    // ============================
+
     public function store(Request $request)
     {
+        // Hanya Administrator yang boleh menyimpan guru
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk menambah data guru.');
+        }
+
         // Validasi
         $request->validate([
             'nama_guru' => 'required',
@@ -87,11 +126,16 @@ class GuruController extends Controller
 
 
     // ============================
-    // FORM EDIT
+    // FORM EDIT GURU
     // ============================
 
     public function edit($id)
     {
+        // Hanya Administrator yang boleh edit
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk mengedit data guru.');
+        }
+
         $guru = DB::table('guru')
             ->where('id_guru', $id)
             ->first();
@@ -112,6 +156,11 @@ class GuruController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Hanya Administrator yang boleh update
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk mengubah data guru.');
+        }
+
         $request->validate([
             'nama_guru' => 'required',
             'nip'       => 'required',
@@ -120,6 +169,7 @@ class GuruController extends Controller
         ]);
 
 
+        // Cari data guru
         $guru = DB::table('guru')
             ->where('id_guru', $id)
             ->first();
@@ -131,11 +181,17 @@ class GuruController extends Controller
         }
 
 
-        // Foto lama
+        // ============================
+        // FOTO LAMA
+        // ============================
+
         $namaFoto = $guru->foto;
 
 
-        // Kalau ada foto baru
+        // ============================
+        // UPLOAD FOTO BARU
+        // ============================
+
         if ($request->hasFile('foto')) {
 
             $file = $request->file('foto');
@@ -148,10 +204,14 @@ class GuruController extends Controller
                 mkdir($folder, 0777, true);
             }
 
+            // Upload foto baru
             $file->move($folder, $namaFoto);
 
 
-            // Hapus foto lama
+            // ============================
+            // HAPUS FOTO LAMA
+            // ============================
+
             if ($guru->foto) {
 
                 $fotoLama = $folder . '/' . $guru->foto;
@@ -163,7 +223,10 @@ class GuruController extends Controller
         }
 
 
-        // Update database
+        // ============================
+        // UPDATE DATABASE
+        // ============================
+
         DB::table('guru')
             ->where('id_guru', $id)
             ->update([
@@ -186,6 +249,12 @@ class GuruController extends Controller
 
     public function destroy($id)
     {
+        // Hanya Administrator yang boleh menghapus
+        if (!auth()->check() || strtolower(trim(auth()->user()->role)) !== 'administrator') {
+            abort(403, 'Anda tidak memiliki izin untuk menghapus data guru.');
+        }
+
+        // Cari data guru
         $guru = DB::table('guru')
             ->where('id_guru', $id)
             ->first();
@@ -193,7 +262,10 @@ class GuruController extends Controller
 
         if ($guru) {
 
-            // Hapus foto
+            // ============================
+            // HAPUS FOTO
+            // ============================
+
             if ($guru->foto) {
 
                 $foto = public_path('uploads/guru/' . $guru->foto);
@@ -204,7 +276,10 @@ class GuruController extends Controller
             }
 
 
-            // Hapus data
+            // ============================
+            // HAPUS DATA GURU
+            // ============================
+
             DB::table('guru')
                 ->where('id_guru', $id)
                 ->delete();

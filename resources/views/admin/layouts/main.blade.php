@@ -238,11 +238,18 @@
 
         /* =========================
            HEADER
+           PERBAIKAN DI SINI
         ========================= */
 
         .pc-header {
 
             margin-left: 260px !important;
+
+            width: calc(100% - 260px) !important;
+
+            max-width: calc(100% - 260px) !important;
+
+            box-sizing: border-box !important;
 
         }
 
@@ -508,6 +515,18 @@
                     'important'
                 );
 
+                header.style.setProperty(
+                    'width',
+                    'calc(100% - 260px)',
+                    'important'
+                );
+
+                header.style.setProperty(
+                    'max-width',
+                    'calc(100% - 260px)',
+                    'important'
+                );
+
             }
 
 
@@ -526,7 +545,6 @@
         });
 
     </script>
-    
 
 
 </body>

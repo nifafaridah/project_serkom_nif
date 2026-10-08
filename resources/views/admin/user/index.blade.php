@@ -32,33 +32,35 @@
                         </p>
                     </div>
 
-                    <a href="{{ route('user.create') }}" class="btn btn-primary">
-                        <i class="ti ti-plus"></i>
-                        Tambah User
-                    </a>
+                    {{-- TAMBAH USER HANYA UNTUK ADMINISTRATOR --}}
+                    @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
+
+                        <a href="{{ route('user.create') }}" class="btn btn-primary">
+                            <i class="ti ti-plus"></i>
+                            Tambah User
+                        </a>
+
+                    @endif
 
                 </div>
             </div>
 
             <div class="card-body">
-                @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Berhasil!</strong> {{ session('success') }}
 
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close">
-        </button>
-    </div>
-@endif
-
+                {{-- Pesan berhasil --}}
                 @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Berhasil!</strong> {{ session('success') }}
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close">
+                        </button>
                     </div>
                 @endif
 
+                {{-- Pesan error --}}
                 @if($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">
@@ -71,7 +73,7 @@
 
                 <div class="table-responsive">
 
-                    <table class="table table-hover align-middle">
+                    <table class="table table-bordered table-hover align-middle">
 
                         <thead>
                             <tr>
@@ -79,7 +81,7 @@
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Aksi</th>
+                                <th style="width: 280px;">Aksi</th>
                             </tr>
                         </thead>
 
@@ -89,42 +91,72 @@
 
                                 <tr>
 
-                                    <td>{{ $loop->iteration }}</td>
+                                    {{-- Nomor --}}
+                                    <td>
+                                        {{ $loop->iteration }}
+                                    </td>
 
-                                    <td>{{ $user->name }}</td>
+                                    {{-- Nama --}}
+                                    <td>
+                                        {{ $user->name }}
+                                    </td>
 
-                                    <td>{{ $user->email }}</td>
+                                    {{-- Email --}}
+                                    <td>
+                                        {{ $user->email }}
+                                    </td>
 
+                                    {{-- Role --}}
                                     <td>
                                         <span class="badge bg-primary">
                                             {{ $user->role }}
                                         </span>
                                     </td>
 
+                                    {{-- Aksi --}}
                                     <td>
-                                        <a href="{{ route('user.edit', $user->id) }}"
-                                           class="btn btn-warning btn-sm">
-                                            <i class="ti ti-edit"></i>
-                                            Edit
-                                        </a>
+                                        <div class="d-flex gap-2 flex-nowrap">
 
-                                        <form action="{{ route('user.destroy', $user->id) }}"
-                                              method="POST"
-                                              style="display:inline;">
+                                            {{-- DETAIL --}}
+                                            <a href="{{ route('user.show', $user->id) }}"
+                                               class="btn btn-info btn-sm"
+                                               title="Detail User">
 
-                                            @csrf
-                                            @method('DELETE')
+                                                <i class="ti ti-eye"></i>
+                                            </a>
 
-                                            <button type="submit"
-                                                    class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Yakin ingin menghapus user ini?')">
+                                            {{-- EDIT & HAPUS HANYA UNTUK ADMINISTRATOR --}}
+                                            @if(auth()->check() && strtolower(trim(auth()->user()->role)) === 'administrator')
 
-                                                <i class="ti ti-trash"></i>
-                                                Hapus
+                                                {{-- EDIT --}}
+                                                <a href="{{ route('user.edit', $user->id) }}"
+                                                   class="btn btn-warning btn-sm"
+                                                   title="Edit User">
 
-                                            </button>
+                                                    <i class="ti ti-edit"></i>
+                                                </a>
 
-                                        </form>
+                                                {{-- HAPUS --}}
+                                                <form action="{{ route('user.destroy', $user->id) }}"
+                                                      method="POST"
+                                                      class="d-inline"
+                                                      onsubmit="return confirm('Yakin ingin menghapus user ini?')">
+
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button type="submit"
+                                                            class="btn btn-danger btn-sm"
+                                                            title="Hapus User">
+
+                                                        <i class="ti ti-trash"></i>
+                                                    </button>
+
+                                                </form>
+
+                                            @endif
+
+                                        </div>
                                     </td>
 
                                 </tr>

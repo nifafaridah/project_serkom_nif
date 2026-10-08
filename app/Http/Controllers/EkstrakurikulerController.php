@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 
 class EkstrakurikulerController extends Controller
 {
-    // Menampilkan semua data
+    // ========================================
+    // MENAMPILKAN SEMUA DATA EKSTRAKURIKULER
+    // ========================================
+
     public function index()
     {
         $ekstrakurikuler = Ekstrakurikuler::all();
@@ -18,22 +21,62 @@ class EkstrakurikulerController extends Controller
         );
     }
 
-    // Menampilkan form tambah
+
+    // ========================================
+    // MENAMPILKAN DETAIL EKSTRAKURIKULER
+    // ========================================
+
+    public function show($id)
+    {
+        $ekskul = Ekstrakurikuler::findOrFail($id);
+
+        return view(
+            'admin.ekstrakurikuler.show',
+            compact('ekskul')
+        );
+    }
+
+
+    // ========================================
+    // MENAMPILKAN FORM TAMBAH
+    // ========================================
+
     public function create()
     {
+        // Hanya Administrator yang boleh menambah
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk menambah data ekstrakurikuler.');
+        }
+
         return view('admin.ekstrakurikuler.create');
     }
 
-    // Menyimpan data baru
+
+    // ========================================
+    // MENYIMPAN DATA BARU
+    // ========================================
+
     public function store(Request $request)
     {
+        // Hanya Administrator yang boleh menyimpan
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk menambah data ekstrakurikuler.');
+        }
+
         $request->validate([
-            'nama_ekskul' => 'required|max:100',
-            'pembina' => 'required|max:100',
-            'jadwal_latihan' => 'required|max:100',
-            'deskripsi' => 'required',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama_ekskul'     => 'required|max:100',
+            'pembina'         => 'required|max:100',
+            'jadwal_latihan'  => 'required|max:100',
+            'deskripsi'       => 'required',
+            'gambar'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
 
         $ekskul = new Ekstrakurikuler();
 
@@ -42,7 +85,11 @@ class EkstrakurikulerController extends Controller
         $ekskul->jadwal_latihan = $request->jadwal_latihan;
         $ekskul->deskripsi = $request->deskripsi;
 
-        // Upload gambar
+
+        // ========================================
+        // UPLOAD GAMBAR
+        // ========================================
+
         if ($request->hasFile('gambar')) {
 
             $folder = public_path('uploads/ekstrakurikuler');
@@ -60,16 +107,37 @@ class EkstrakurikulerController extends Controller
             $ekskul->gambar = $namaFile;
         }
 
+
+        // ========================================
+        // SIMPAN
+        // ========================================
+
         $ekskul->save();
+
 
         return redirect()
             ->route('ekstrakurikuler.index')
-            ->with('success', 'Data ekstrakurikuler berhasil disimpan!');
+            ->with(
+                'success',
+                'Data ekstrakurikuler berhasil disimpan!'
+            );
     }
 
-    // Menampilkan form edit
+
+    // ========================================
+    // MENAMPILKAN FORM EDIT
+    // ========================================
+
     public function edit($id)
     {
+        // Hanya Administrator yang boleh mengedit
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk mengedit data ekstrakurikuler.');
+        }
+
         $ekskul = Ekstrakurikuler::findOrFail($id);
 
         return view(
@@ -78,25 +146,43 @@ class EkstrakurikulerController extends Controller
         );
     }
 
-    // Mengupdate data
+
+    // ========================================
+    // MENGUPDATE DATA
+    // ========================================
+
     public function update(Request $request, $id)
     {
+        // Hanya Administrator yang boleh memperbarui
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk mengedit data ekstrakurikuler.');
+        }
+
         $request->validate([
-            'nama_ekskul' => 'required|max:100',
-            'pembina' => 'required|max:100',
-            'jadwal_latihan' => 'required|max:100',
-            'deskripsi' => 'required',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama_ekskul'     => 'required|max:100',
+            'pembina'         => 'required|max:100',
+            'jadwal_latihan'  => 'required|max:100',
+            'deskripsi'       => 'required',
+            'gambar'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
+
         $ekskul = Ekstrakurikuler::findOrFail($id);
+
 
         $ekskul->nama_ekskul = $request->nama_ekskul;
         $ekskul->pembina = $request->pembina;
         $ekskul->jadwal_latihan = $request->jadwal_latihan;
         $ekskul->deskripsi = $request->deskripsi;
 
-        // Jika mengganti gambar
+
+        // ========================================
+        // JIKA MENGGANTI GAMBAR
+        // ========================================
+
         if ($request->hasFile('gambar')) {
 
             $folder = public_path('uploads/ekstrakurikuler');
@@ -105,7 +191,8 @@ class EkstrakurikulerController extends Controller
                 mkdir($folder, 0777, true);
             }
 
-            // Hapus gambar lama
+
+            // HAPUS GAMBAR LAMA
             if ($ekskul->gambar) {
 
                 $gambarLama = $folder . '/' . $ekskul->gambar;
@@ -115,7 +202,8 @@ class EkstrakurikulerController extends Controller
                 }
             }
 
-            // Upload gambar baru
+
+            // UPLOAD GAMBAR BARU
             $file = $request->file('gambar');
 
             $namaFile = time() . '_' . $file->getClientOriginalName();
@@ -125,19 +213,44 @@ class EkstrakurikulerController extends Controller
             $ekskul->gambar = $namaFile;
         }
 
+
+        // ========================================
+        // SIMPAN PERUBAHAN
+        // ========================================
+
         $ekskul->save();
+
 
         return redirect()
             ->route('ekstrakurikuler.index')
-            ->with('success', 'Data ekstrakurikuler berhasil diperbarui!');
+            ->with(
+                'success',
+                'Data ekstrakurikuler berhasil diperbarui!'
+            );
     }
 
-    // Menghapus data
+
+    // ========================================
+    // MENGHAPUS DATA
+    // ========================================
+
     public function destroy($id)
     {
+        // Hanya Administrator yang boleh menghapus
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk menghapus data ekstrakurikuler.');
+        }
+
         $ekskul = Ekstrakurikuler::findOrFail($id);
 
-        // Hapus gambar
+
+        // ========================================
+        // HAPUS GAMBAR
+        // ========================================
+
         if ($ekskul->gambar) {
 
             $gambar = public_path(
@@ -149,10 +262,19 @@ class EkstrakurikulerController extends Controller
             }
         }
 
+
+        // ========================================
+        // HAPUS DATA
+        // ========================================
+
         $ekskul->delete();
+
 
         return redirect()
             ->route('ekstrakurikuler.index')
-            ->with('success', 'Data ekstrakurikuler berhasil dihapus!');
+            ->with(
+                'success',
+                'Data ekstrakurikuler berhasil dihapus!'
+            );
     }
 }
