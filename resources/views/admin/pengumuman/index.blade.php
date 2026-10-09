@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -191,7 +192,7 @@
                                         {{-- HAPUS --}}
                                         <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
                                               method="POST"
-                                              class="d-inline">
+                                              class="d-inline form-hapus">
 
                                             @csrf
 
@@ -199,8 +200,7 @@
 
                                             <button type="submit"
                                                     class="btn btn-danger btn-sm"
-                                                    title="Hapus Pengumuman"
-                                                    onclick="return confirm('Yakin ingin menghapus pengumuman ini?')">
+                                                    title="Hapus Pengumuman">
 
                                                 <i class="ti ti-trash"></i>
 

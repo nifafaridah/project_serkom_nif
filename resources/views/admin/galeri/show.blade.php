@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -39,24 +40,12 @@
 
         <div class="card-header">
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-1">Detail Galeri</h5>
 
-                <div>
-                    <h5 class="mb-1">Detail Galeri</h5>
-
-                    <p class="mb-0 text-muted">
-                        Informasi foto galeri sekolah
-                    </p>
-                </div>
-
-                <a href="{{ route('galeri.index') }}"
-                   class="btn btn-secondary btn-sm">
-
-                    <i class="ti ti-arrow-left me-1"></i>
-                    Kembali
-
-                </a>
-
+                <p class="mb-0 text-muted">
+                    Informasi foto galeri sekolah
+                </p>
             </div>
 
         </div>

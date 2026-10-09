@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -156,8 +157,6 @@
                                        title="Detail Berita">
 
                                         <i class="ti ti-eye"></i>
-                                        Detail
-
                                     </a>
 
 
@@ -170,15 +169,13 @@
                                            title="Edit Berita">
 
                                             <i class="ti ti-edit"></i>
-                                            Edit
-
                                         </a>
 
 
                                         {{-- HAPUS --}}
                                         <form action="{{ route('berita.destroy', $berita->id) }}"
                                               method="POST"
-                                              class="d-inline">
+                                              class="d-inline form-hapus">
 
                                             @csrf
 
@@ -186,12 +183,9 @@
 
                                             <button type="submit"
                                                     class="btn btn-danger btn-sm"
-                                                    title="Hapus Berita"
-                                                    onclick="return confirm('Yakin ingin menghapus berita ini?')">
+                                                    title="Hapus Berita">
 
                                                 <i class="ti ti-trash"></i>
-                                                Hapus
-
                                             </button>
 
                                         </form>

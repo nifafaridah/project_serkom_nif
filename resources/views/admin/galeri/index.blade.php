@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -137,7 +138,6 @@
                 <table class="table table-bordered table-hover align-middle">
 
                     <thead>
-
                         <tr>
 
                             <th style="width: 70px;">
@@ -161,7 +161,6 @@
                             </th>
 
                         </tr>
-
                     </thead>
 
 
@@ -292,11 +291,11 @@
                                             <form
                                                 action="{{ route('galeri.destroy', $item->id) }}"
                                                 method="POST"
-                                                class="d-inline"
-                                                onsubmit="return confirm('Yakin ingin menghapus galeri ini?')"
+                                                class="d-inline form-hapus"
                                             >
 
                                                 @csrf
+
                                                 @method('DELETE')
 
                                                 <button

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -9,7 +9,23 @@ class ProfilSekolahController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | TAMPILKAN PROFIL
+    | CEK HAK AKSES ADMINISTRATOR
+    |--------------------------------------------------------------------------
+    */
+
+    private function hanyaAdministrator()
+    {
+        if (
+            !auth()->check() ||
+            strtolower(trim(auth()->user()->role)) !== 'administrator'
+        ) {
+            abort(403, 'Anda tidak memiliki izin untuk melakukan tindakan ini.');
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | TAMPILKAN PROFIL SEKOLAH
     |--------------------------------------------------------------------------
     */
 
@@ -38,6 +54,8 @@ class ProfilSekolahController extends Controller
 
     public function store(Request $request)
     {
+        $this->hanyaAdministrator();
+
         $request->validate([
             'nama_sekolah' => 'required|string|max:255',
             'kepala_sekolah' => 'required|string|max:255',
@@ -95,6 +113,8 @@ class ProfilSekolahController extends Controller
 
     public function edit()
     {
+        $this->hanyaAdministrator();
+
         $profil = ProfilSekolah::first();
 
         return view('admin.profil-sekolah.edit', compact('profil'));
@@ -108,6 +128,8 @@ class ProfilSekolahController extends Controller
 
     public function update(Request $request)
     {
+        $this->hanyaAdministrator();
+
         $profil = ProfilSekolah::firstOrFail();
 
         $request->validate([
@@ -159,4 +181,3 @@ class ProfilSekolahController extends Controller
             ->with('success', 'Profil sekolah berhasil diperbarui!');
     }
 }
-

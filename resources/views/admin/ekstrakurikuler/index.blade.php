@@ -1,5 +1,4 @@
 @extends('admin.layouts.main')
-
 @section('content')
 
 <div class="page-header mb-4">
@@ -210,8 +209,7 @@
                                 <form
                                     action="{{ route('ekstrakurikuler.destroy', $item->id) }}"
                                     method="POST"
-                                    class="d-inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus data ini?')"
+                                    class="d-inline form-hapus"
                                 >
 
                                     @csrf

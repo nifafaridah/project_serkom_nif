@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -52,28 +53,15 @@
         {{-- Header Card --}}
         <div class="card-header">
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div>
 
-                <div>
+                <h5 class="mb-1">
+                    Detail Pengumuman
+                </h5>
 
-                    <h5 class="mb-1">
-                        Detail Pengumuman
-                    </h5>
-
-                    <p class="mb-0 text-muted">
-                        Informasi pengumuman sekolah
-                    </p>
-
-                </div>
-
-
-                <a href="{{ route('pengumuman.index') }}"
-                   class="btn btn-secondary btn-sm">
-
-                    <i class="ti ti-arrow-left me-1"></i>
-                    Kembali
-
-                </a>
+                <p class="mb-0 text-muted">
+                    Informasi pengumuman sekolah
+                </p>
 
             </div>
 

@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -50,7 +51,7 @@
 <div class="card border-0 shadow-sm">
 
     {{-- HEADER CARD --}}
-    <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="card-header">
 
         <div>
 
@@ -63,15 +64,6 @@
             </p>
 
         </div>
-
-
-        <a href="{{ route('berita.index') }}"
-           class="btn btn-secondary btn-sm">
-
-            <i class="ti ti-arrow-left me-1"></i>
-            Kembali
-
-        </a>
 
     </div>
 

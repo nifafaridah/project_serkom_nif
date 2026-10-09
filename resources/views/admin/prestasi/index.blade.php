@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -291,8 +292,7 @@
                                         <form
                                             action="{{ route('prestasi.destroy', $item->id_prestasi) }}"
                                             method="POST"
-                                            class="d-inline"
-                                            onsubmit="return confirm('Yakin ingin menghapus data prestasi ini?')"
+                                            class="d-inline form-hapus"
                                         >
 
                                             @csrf

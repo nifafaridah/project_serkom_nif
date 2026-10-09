@@ -14,6 +14,7 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PrestasiController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -193,14 +194,16 @@ Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.dest
 Route::resource('prestasi', PrestasiController::class);
 Route::resource('prestasi', PrestasiController::class);
 
+
 /*
 |--------------------------------------------------------------------------
 | PROFIL PENGGUNA
 |--------------------------------------------------------------------------
 */
 
-Route::get('/profil', function () {
-    return view('admin.profil.index');
-})
-    ->middleware('auth')
-    ->name('profil.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/profil', [ProfileController::class, 'index'])   ->name('profil.index');
+    Route::get('/profil/edit', [ProfileController::class, 'edit']) ->name('profile.edit');
+    Route::put('/profil/update', [ProfileController::class, 'update']) ->name('profile.update');
+
+});

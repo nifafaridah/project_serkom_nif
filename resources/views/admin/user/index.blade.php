@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.main')
 
 @section('content')
@@ -139,8 +140,7 @@
                                                 {{-- HAPUS --}}
                                                 <form action="{{ route('user.destroy', $user->id) }}"
                                                       method="POST"
-                                                      class="d-inline"
-                                                      onsubmit="return confirm('Yakin ingin menghapus user ini?')">
+                                                      class="d-inline form-hapus">
 
                                                     @csrf
                                                     @method('DELETE')

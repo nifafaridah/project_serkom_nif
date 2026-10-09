@@ -1,11 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
     <title>Admin Dashboard - SDN CITATAH</title>
-
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicon -->
@@ -13,42 +11,26 @@
           href="{{ asset('assets/images/favicon.svg') }}"
           type="image/x-icon">
 
-
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap">
 
-
     <!-- Icons -->
-    <link rel="stylesheet"
-          href="{{ asset('assets/fonts/tabler-icons.min.css') }}">
-
-    <link rel="stylesheet"
-          href="{{ asset('assets/fonts/feather.css') }}">
-
-    <link rel="stylesheet"
-          href="{{ asset('assets/fonts/fontawesome.css') }}">
-
-    <link rel="stylesheet"
-          href="{{ asset('assets/fonts/material.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('assets/fonts/tabler-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/feather.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/material.css') }}">
 
     <!-- Template CSS -->
     <link rel="stylesheet"
           href="{{ asset('assets/css/style.css') }}"
           id="main-style-link">
-
     <link rel="stylesheet"
           href="{{ asset('assets/css/style-preset.css') }}">
 
-
     <!-- CSS LAYOUT -->
     <style>
-
-        /* =========================
-           BODY
-        ========================= */
-
+        /* BODY */
         html,
         body {
             margin: 0 !important;
@@ -56,497 +38,294 @@
             overflow-x: hidden !important;
         }
 
-
-        /* =========================
-           SIDEBAR
-        ========================= */
-
+        /* SIDEBAR */
         .pc-sidebar {
-
             position: fixed !important;
-
             top: 0 !important;
             left: 0 !important;
             bottom: 0 !important;
-
             width: 260px !important;
             min-width: 260px !important;
             max-width: 260px !important;
-
             z-index: 1025 !important;
-
             display: block !important;
-
             visibility: visible !important;
-
             transform: translateX(0) !important;
-
             background: #ffffff !important;
-
         }
-
-
-        /* Sidebar wrapper */
 
         .pc-sidebar .navbar-wrapper {
-
             width: 260px !important;
-
             min-width: 260px !important;
-
         }
-
-
-        /* Header/logo sidebar */
 
         .pc-sidebar .m-header {
-
             width: 260px !important;
-
             height: 70px !important;
-
             display: flex !important;
-
             align-items: center !important;
-
             padding: 15px 20px !important;
-
             box-sizing: border-box !important;
-
         }
-
-
-        /* Menu sidebar */
 
         .pc-sidebar .pc-navbar {
-
             width: 100% !important;
-
         }
-
-
-        /* Tulisan menu */
 
         .pc-sidebar .pc-mtext {
-
             display: inline !important;
-
             visibility: visible !important;
-
             opacity: 1 !important;
-
         }
-
-
-        /* Icon menu */
 
         .pc-sidebar .pc-micon {
-
             display: inline-flex !important;
-
             visibility: visible !important;
-
         }
-
-
-        /* Caption menu */
 
         .pc-sidebar .pc-caption {
-
             display: block !important;
-
             visibility: visible !important;
-
         }
 
-
-        /* =========================
-           CONTENT UTAMA
-        ========================= */
-
+        /* CONTENT UTAMA */
         .pc-container {
-
             margin-left: 260px !important;
-
             width: calc(100% - 260px) !important;
-
             max-width: calc(100% - 260px) !important;
-
             padding: 25px !important;
-
             box-sizing: border-box !important;
-
         }
-
 
         .pc-content {
-
             width: 100% !important;
-
             max-width: 100% !important;
-
             margin: 0 !important;
-
             padding: 0 !important;
-
         }
 
-
-        /* =========================
-           PAGE HEADER
-        ========================= */
-
+        /* PAGE HEADER */
         .page-header {
-
             width: 100% !important;
-
         }
 
-
-        /* =========================
-           CARD
-        ========================= */
-
+        /* CARD */
         .card {
-
             width: 100%;
-
         }
 
-
-        /* =========================
-           TABLE
-        ========================= */
-
+        /* TABLE */
         .table-responsive {
-
             width: 100% !important;
-
         }
 
-
-        /* =========================
-           FOOTER
-        ========================= */
-
+        /* FOOTER */
         .pc-footer {
-
             margin-left: 260px !important;
-
         }
 
-
-        /* =========================
-           HEADER
-           PERBAIKAN DI SINI
-        ========================= */
-
+        /* HEADER */
         .pc-header {
-
             margin-left: 260px !important;
-
             width: calc(100% - 260px) !important;
-
             max-width: calc(100% - 260px) !important;
-
             box-sizing: border-box !important;
-
         }
 
+        /* NOTIFIKASI HAPUS BIRU */
+        .modal-hapus-biru {
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .judul-hapus-biru {
+            color: #1e40af;
+            font-size: 24px;
+        }
+
+        .modal-hapus-biru .swal2-html-container {
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .tombol-hapus-biru,
+        .tombol-batal-biru {
+            padding: 10px 22px;
+            margin: 5px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .tombol-hapus-biru {
+            background: #2563eb;
+            color: white;
+            border: 1px solid #2563eb;
+        }
+
+        .tombol-batal-biru {
+            background: white;
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+        }
     </style>
-
 </head>
-
 
 <body
     data-pc-preset="preset-1"
     data-pc-direction="ltr"
     data-pc-theme="light">
 
-
-    <!-- =========================
-         LOADER
-    ========================= -->
-
+    <!-- LOADER -->
     <div class="loader-bg">
-
         <div class="loader-track">
-
             <div class="loader-fill"></div>
-
         </div>
-
     </div>
 
-
-
-    <!-- =========================
-         SIDEBAR
-    ========================= -->
-
+    <!-- SIDEBAR -->
     @include('admin.layouts.sidebar')
 
-
-
-    <!-- =========================
-         HEADER
-    ========================= -->
-
+    <!-- HEADER -->
     @include('admin.layouts.header')
 
-
-
-    <!-- =========================
-         CONTENT
-    ========================= -->
-
+    <!-- CONTENT -->
     <div class="pc-container">
-
         <div class="pc-content">
-
             @yield('content')
-
         </div>
-
     </div>
 
-
-
-    <!-- =========================
-         FOOTER
-    ========================= -->
-
+    <!-- FOOTER -->
     @include('admin.layouts.footer')
 
-
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
-
+    <!-- JAVASCRIPT LAMA -->
     <script src="{{ asset('assets/js/plugins/popper.min.js') }}"></script>
-
     <script src="{{ asset('assets/js/plugins/simplebar.min.js') }}"></script>
-
     <script src="{{ asset('assets/js/plugins/bootstrap.min.js') }}"></script>
-
     <script src="{{ asset('assets/js/fonts/custom-font.js') }}"></script>
-
     <script src="{{ asset('assets/js/pcoded.js') }}"></script>
 
-
-
     <!-- Layout -->
-
     <script>
         layout_change('light');
     </script>
-
 
     <script>
         change_box_container('false');
     </script>
 
-
     <script>
         layout_rtl_change('false');
     </script>
-
 
     <script>
         preset_change("preset-1");
     </script>
 
-
     <script>
         font_change("Public-Sans");
     </script>
 
-
-
-    <!-- =========================
-         PAKSA SIDEBAR TERBUKA
-    ========================= -->
-
+    <!-- PAKSA SIDEBAR TERBUKA -->
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
-
-            const sidebar =
-                document.querySelector('.pc-sidebar');
-
-            const container =
-                document.querySelector('.pc-container');
-
-            const header =
-                document.querySelector('.pc-header');
-
-            const footer =
-                document.querySelector('.pc-footer');
-
+            const sidebar = document.querySelector('.pc-sidebar');
+            const container = document.querySelector('.pc-container');
+            const header = document.querySelector('.pc-header');
+            const footer = document.querySelector('.pc-footer');
 
             /* SIDEBAR */
-
             if (sidebar) {
-
-                sidebar.style.setProperty(
-                    'width',
-                    '260px',
-                    'important'
-                );
-
-                sidebar.style.setProperty(
-                    'min-width',
-                    '260px',
-                    'important'
-                );
-
-                sidebar.style.setProperty(
-                    'max-width',
-                    '260px',
-                    'important'
-                );
-
-                sidebar.style.setProperty(
-                    'left',
-                    '0',
-                    'important'
-                );
-
-                sidebar.style.setProperty(
-                    'transform',
-                    'translateX(0)',
-                    'important'
-                );
-
-                sidebar.style.setProperty(
-                    'visibility',
-                    'visible',
-                    'important'
-                );
-
-                sidebar.style.setProperty(
-                    'display',
-                    'block',
-                    'important'
-                );
-
+                sidebar.style.setProperty('width', '260px', 'important');
+                sidebar.style.setProperty('min-width', '260px', 'important');
+                sidebar.style.setProperty('max-width', '260px', 'important');
+                sidebar.style.setProperty('left', '0', 'important');
+                sidebar.style.setProperty('transform', 'translateX(0)', 'important');
+                sidebar.style.setProperty('visibility', 'visible', 'important');
+                sidebar.style.setProperty('display', 'block', 'important');
             }
-
 
             /* MENU SIDEBAR */
-
             if (sidebar) {
-
-                const texts =
-                    sidebar.querySelectorAll('.pc-mtext');
+                const texts = sidebar.querySelectorAll('.pc-mtext');
 
                 texts.forEach(function (text) {
-
-                    text.style.setProperty(
-                        'display',
-                        'inline',
-                        'important'
-                    );
-
-                    text.style.setProperty(
-                        'visibility',
-                        'visible',
-                        'important'
-                    );
-
-                    text.style.setProperty(
-                        'opacity',
-                        '1',
-                        'important'
-                    );
-
+                    text.style.setProperty('display', 'inline', 'important');
+                    text.style.setProperty('visibility', 'visible', 'important');
+                    text.style.setProperty('opacity', '1', 'important');
                 });
 
-
-                const icons =
-                    sidebar.querySelectorAll('.pc-micon');
+                const icons = sidebar.querySelectorAll('.pc-micon');
 
                 icons.forEach(function (icon) {
-
-                    icon.style.setProperty(
-                        'display',
-                        'inline-flex',
-                        'important'
-                    );
-
+                    icon.style.setProperty('display', 'inline-flex', 'important');
                 });
-
             }
-
 
             /* CONTENT */
-
             if (container) {
-
-                container.style.setProperty(
-                    'margin-left',
-                    '260px',
-                    'important'
-                );
-
-                container.style.setProperty(
-                    'width',
-                    'calc(100% - 260px)',
-                    'important'
-                );
-
-                container.style.setProperty(
-                    'max-width',
-                    'calc(100% - 260px)',
-                    'important'
-                );
-
+                container.style.setProperty('margin-left', '260px', 'important');
+                container.style.setProperty('width', 'calc(100% - 260px)', 'important');
+                container.style.setProperty('max-width', 'calc(100% - 260px)', 'important');
             }
-
 
             /* HEADER */
-
             if (header) {
-
-                header.style.setProperty(
-                    'margin-left',
-                    '260px',
-                    'important'
-                );
-
-                header.style.setProperty(
-                    'width',
-                    'calc(100% - 260px)',
-                    'important'
-                );
-
-                header.style.setProperty(
-                    'max-width',
-                    'calc(100% - 260px)',
-                    'important'
-                );
-
+                header.style.setProperty('margin-left', '260px', 'important');
+                header.style.setProperty('width', 'calc(100% - 260px)', 'important');
+                header.style.setProperty('max-width', 'calc(100% - 260px)', 'important');
             }
-
 
             /* FOOTER */
-
             if (footer) {
-
-                footer.style.setProperty(
-                    'margin-left',
-                    '260px',
-                    'important'
-                );
-
+                footer.style.setProperty('margin-left', '260px', 'important');
             }
-
         });
-
     </script>
 
+    <!-- SWEETALERT2 UNTUK SEMUA FORM HAPUS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('submit', function (event) {
+            const form = event.target;
+
+            if (!form.matches('form.form-hapus')) {
+                return;
+            }
+
+            if (form.dataset.confirmed === 'true') {
+                return;
+            }
+
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Hapus Data?',
+                text: 'Yakin ingin menghapus data ini? Data yang dihapus tidak dapat dikembalikan.',
+                icon: 'warning',
+                iconColor: '#2563eb',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                buttonsStyling: false,
+                customClass: {
+                    popup: 'modal-hapus-biru',
+                    title: 'judul-hapus-biru',
+                    confirmButton: 'tombol-hapus-biru',
+                    cancelButton: 'tombol-batal-biru'
+                }
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    form.dataset.confirmed = 'true';
+                    form.requestSubmit();
+                }
+            });
+        });
+    </script>
 
 </body>
-
 </html>
