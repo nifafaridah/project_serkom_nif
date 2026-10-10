@@ -78,7 +78,11 @@ Route::get('/guru/create', [GuruController::class, 'create'])->name('guru.create
 Route::resource('guru', GuruController::class);
 Route::resource('guru', GuruController::class);
 Route::post('/guru', [GuruController::class, 'store'])->name('guru.store');
+Route::get('/detail-guru/{id_guru}', function ($id_guru) {
+    $guru = \App\Models\Guru::findOrFail($id_guru);
 
+    return view('landing.guru.detail-guru', compact('guru'));
+ })->name('landing.detail-guru');
 
 /*
 |--------------------------------------------------------------------------

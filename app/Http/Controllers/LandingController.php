@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\ProfilSekolah;
@@ -14,30 +13,16 @@ use App\Models\Pengumuman;
 
 class LandingController extends Controller
 {
+    // Halaman utama
     public function index()
     {
-        // Profil sekolah
         $profil = ProfilSekolah::first();
-
-        // Data guru
         $guru = Guru::all();
-
-        // Data siswa
         $siswa = Siswa::all();
-
-        // Data berita
         $berita = Berita::latest('tanggal')->get();
-
-        // Data galeri
         $galeri = Galeri::all();
-
-        // Data ekstrakurikuler
         $ekstrakurikuler = Ekstrakurikuler::all();
-
-        // Data prestasi
         $prestasi = Prestasi::latest()->get();
-
-        // Data pengumuman
         $pengumuman = Pengumuman::latest()->get();
 
         return view('landing.index', compact(
@@ -50,5 +35,72 @@ class LandingController extends Controller
             'prestasi',
             'pengumuman'
         ));
+    }
+
+    // Detail profil sekolah
+    public function profil()
+    {
+        $profil = ProfilSekolah::firstOrFail();
+
+        return view('landing.detail-profil', compact('profil'));
+    }
+
+    // Detail guru
+    public function detailGuru($id)
+    {
+        $guru = Guru::findOrFail($id);
+
+        return view('landing.detail-guru', compact('guru'));
+    }
+
+    // Detail siswa
+    public function detailSiswa($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+
+        return view('landing.detail-siswa', compact('siswa'));
+    }
+
+    // Detail berita
+    public function detailBerita($id)
+    {
+        $berita = Berita::findOrFail($id);
+
+        return view('landing.detail-berita', compact('berita'));
+    }
+
+    // Detail galeri
+    public function detailGaleri($id)
+    {
+        $galeri = Galeri::findOrFail($id);
+
+        return view('landing.detail-galeri', compact('galeri'));
+    }
+
+    // Detail ekstrakurikuler
+    public function detailEkstrakurikuler($id)
+    {
+        $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
+
+        return view(
+            'landing.detail-ekstrakurikuler',
+            compact('ekstrakurikuler')
+        );
+    }
+
+    // Detail prestasi
+    public function detailPrestasi($id)
+    {
+        $prestasi = Prestasi::findOrFail($id);
+
+        return view('landing.detail-prestasi', compact('prestasi'));
+    }
+
+    // Detail pengumuman
+    public function detailPengumuman($id)
+    {
+        $pengumuman = Pengumuman::findOrFail($id);
+
+        return view('landing.detail-pengumuman', compact('pengumuman'));
     }
 }

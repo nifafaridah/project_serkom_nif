@@ -1,3 +1,4 @@
+```blade
 @extends('admin.layouts.main')
 
 @section('content')
@@ -9,144 +10,139 @@
 
 <div class="card shadow-sm border-0">
 
-{{-- Header Form --}}
-<div class="card-header py-3">
-    <h5 class="mb-0">Form Edit Galeri</h5>
-</div>
+    {{-- Header Form --}}
+    <div class="card-header py-3">
+        <h5 class="mb-0">Form Edit Galeri</h5>
+    </div>
 
-{{-- Isi Form --}}
-<div class="card-body">
+    {{-- Isi Form --}}
+    <div class="card-body">
 
-    <form action="{{ route('galeri.update', $galeri->id) }}"
-          method="POST"
-          enctype="multipart/form-data">
+        <form action="{{ route('galeri.update', $galeri->id) }}"
+              method="POST"
+              enctype="multipart/form-data">
 
-        @csrf
-        @method('PUT')
+            @csrf
+            @method('PUT')
 
-
-        {{-- Judul --}}
-        <div class="mb-3">
-
-            <label for="judul" class="form-label">
-                Judul Galeri
-            </label>
-
-            <input type="text"
-                   id="judul"
-                   name="judul"
-                   class="form-control @error('judul') is-invalid @enderror"
-                   value="{{ old('judul', $galeri->judul) }}"
-                   placeholder="Masukkan judul galeri"
-                   required>
-
-            @error('judul')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-
-        </div>
-
-
-        {{-- Keterangan --}}
-        <div class="mb-3">
-
-            <label for="keterangan" class="form-label">
-                Keterangan
-            </label>
-
-            <textarea id="keterangan"
-                      name="keterangan"
-                      rows="5"
-                      class="form-control @error('keterangan') is-invalid @enderror"
-                      placeholder="Masukkan keterangan galeri">{{ old('keterangan', $galeri->keterangan) }}</textarea>
-
-            @error('keterangan')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-
-        </div>
-
-
-        {{-- Gambar Saat Ini --}}
-        @if($galeri->gambar)
-
+            {{-- Judul --}}
             <div class="mb-3">
 
-                <label class="form-label">
-                    Gambar Saat Ini
+                <label for="judul" class="form-label">
+                    Judul Galeri
                 </label>
 
-                <div class="mt-2">
+                <input type="text"
+                       id="judul"
+                       name="judul"
+                       class="form-control @error('judul') is-invalid @enderror"
+                       value="{{ old('judul', $galeri->judul) }}"
+                       placeholder="Masukkan judul galeri"
+                       required>
 
-                    <img src="{{ asset('uploads/galeri/' . $galeri->gambar) }}"
-                         alt="Gambar Galeri"
-                         width="180"
-                         height="120"
-                         class="img-thumbnail"
-                         style="object-fit: cover;">
-
-                </div>
+                @error('judul')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
 
             </div>
 
-        @endif
+            {{-- Deskripsi --}}
+            <div class="mb-3">
 
+                <label for="deskripsi" class="form-label">
+                    Deskripsi
+                </label>
 
-        {{-- Ganti Gambar --}}
-        <div class="mb-3">
+                <textarea id="deskripsi"
+                          name="deskripsi"
+                          rows="5"
+                          class="form-control @error('deskripsi') is-invalid @enderror"
+                          placeholder="Masukkan deskripsi galeri">{{ old('deskripsi', $galeri->deskripsi) }}</textarea>
 
-            <label for="gambar" class="form-label">
-                Ganti Gambar
-            </label>
+                @error('deskripsi')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
 
-            <input type="file"
-                   id="gambar"
-                   name="gambar"
-                   class="form-control @error('gambar') is-invalid @enderror"
-                   accept="image/*">
+            </div>
 
-            <small class="text-muted">
-                Kosongkan jika tidak ingin mengganti gambar.
-            </small>
+            {{-- Gambar Saat Ini --}}
+            @if($galeri->gambar)
 
-            @error('gambar')
-                <div class="invalid-feedback">
-                    {{ $message }}
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Gambar Saat Ini
+                    </label>
+
+                    <div class="mt-2">
+
+                        <img src="{{ asset('uploads/galeri/' . $galeri->gambar) }}"
+                             alt="Gambar Galeri"
+                             width="180"
+                             height="120"
+                             class="img-thumbnail"
+                             style="object-fit: cover;">
+
+                    </div>
+
                 </div>
-            @enderror
 
-        </div>
+            @endif
 
+            {{-- Ganti Gambar --}}
+            <div class="mb-3">
 
-        {{-- Tombol --}}
-        <div class="d-flex gap-2 mt-4">
+                <label for="gambar" class="form-label">
+                    Ganti Gambar
+                </label>
 
-            <a href="{{ route('galeri.index') }}"
-               class="btn btn-secondary">
+                <input type="file"
+                       id="gambar"
+                       name="gambar"
+                       class="form-control @error('gambar') is-invalid @enderror"
+                       accept="image/jpeg,image/png">
 
-                <i class="ti ti-arrow-left me-1"></i>
-                Kembali
+                <small class="text-muted">
+                    Format JPG, JPEG, atau PNG. Maksimal 5 MB.
+                    Kosongkan jika tidak ingin mengganti gambar.
+                </small>
 
-            </a>
+                @error('gambar')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
 
-            <button type="submit"
-                    class="btn btn-primary">
+            </div>
 
-                <i class="ti ti-device-floppy me-1"></i>
-                Update
+            {{-- Tombol --}}
+            <div class="d-flex gap-2 mt-4">
 
-            </button>
+                <a href="{{ route('galeri.index') }}"
+                   class="btn btn-secondary">
 
-        </div>
+                    <i class="ti ti-arrow-left me-1"></i>
+                    Kembali
 
-    </form>
+                </a>
 
-</div>
+                <button type="submit"
+                        class="btn btn-primary">
 
+                    <i class="ti ti-device-floppy me-1"></i>
+                    Update
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
 
